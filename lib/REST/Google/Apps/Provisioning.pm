@@ -77,6 +77,9 @@ sub getUser {
     my $self = shift;
     my $user = shift;
 
+    $self->{'token'}
+    || croak qq(Can't call getUser without first authenticating);
+
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
     $url .= "/$user" if $user;
 
