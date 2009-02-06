@@ -83,15 +83,7 @@ sub getUser {
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
     $url .= "/$user" if $user;
 
-    my $request = HTTP::Request->new( 'GET' => $url );
-    $request->header( 'Content-Type'  => 'application/atom+xml' );
-    $request->header( 'Authorization' => 'GoogleLogin auth=' . $self->{'token'} );
-
-    my $response = $self->{'lwp'}->request( $request );
-
-    $response->is_success() || return( 0 );
-
-    my $result = $self->{'xml'}->XMLin( $response->content() );
+    my $result = $self->_request( $url ) || return( 0 );
 
     my ( $ref );
 
@@ -114,6 +106,24 @@ sub getUser {
     }
 
     return( $ref );
+}
+
+
+
+sub _request {
+    my $self = shift;
+    my $url  = shift;
+
+    my $request = HTTP::Request->new( 'GET' => $url );
+
+    $request->header( 'Content-Type'  => 'application/atom+xml' );
+    $request->header( 'Authorization' => 'GoogleLogin auth=' . $self->{'token'} );
+
+    my $response = $self->{'lwp'}->request( $request );
+
+    $response->is_success() || return( 0 );
+
+    return( $self->{'xml'}->XMLin( $response->content() ) );
 }
 
 
