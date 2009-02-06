@@ -21,7 +21,7 @@ sub new {
     || croak qq(Missing required 'domain' argument);
 
     $self->{'lwp'} = LWP::UserAgent->new();
-    $self->{'lwp'}->agent( 'GoogleProvisioningAPI-perl/1.0' ); #
+    $self->{'lwp'}->agent( 'RESTGoogleAppsProvisioning/' . $VERSION );
 
     if ( $arg->{'username'} && $arg->{'password'} ) {
         $self->authenticate(
