@@ -72,6 +72,75 @@ sub authenticate {
 }
 
 
+sub getGroup {
+    my $self  = shift;
+    my $group = shift;
+
+    $self->{'token'}
+    || croak qq(Can't call getGroup without first authenticating);
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/group/2.0);
+    $url .= "/$group" if $group;
+
+    my $result = $self->_request( $url ) || return( 0 );
+
+    my ( $ref );
+
+    unless ( $group ) {
+        foreach ( keys %{$result->{'entry'}} ) {
+            $group = $1 if /^.*\/(.+)$/;
+            $ref->{$group} = {
+                %{$result->{'entry'}->{$_}->{'apps:name'}},
+                %{$result->{'entry'}->{$_}->{'apps:login'}}
+            }
+        }
+    }
+    else {
+        $ref->{$group} = {
+            %{$result->{'apps:name'}},
+            %{$result->{'apps:login'}}
+        };
+    }
+
+    return( $ref );
+}
+
+
+
+sub getNickname {
+    my $self = shift;
+    my $nick = shift;
+
+    $self->{'token'}
+    || croak qq(Can't call getNickname without first authenticating);
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0);
+    $url .= "/$nick" if $nick;
+
+    my $result = $self->_request( $url ) || return( 0 );
+
+    my ( $ref );
+
+    unless ( $nick ) {
+        foreach ( keys %{$result->{'entry'}} ) {
+            $nick = $1 if /^.*\/(.+)$/;
+            $ref->{$nick} = {
+                %{$result->{'entry'}->{$_}->{'apps:login'}},
+                %{$result->{'entry'}->{$_}->{'apps:nickname'}}
+            }
+        }
+    }
+    else {
+        $ref->{$nick} = {
+            %{$result->{'apps:login'}},
+            %{$result->{'apps:nickname'}}
+        };
+    }
+
+    return( $ref );
+}
+
+
 
 sub getUser {
     my $self = shift;
@@ -89,8 +158,8 @@ sub getUser {
 
     unless ( $user ) {
         foreach ( keys %{$result->{'entry'}} ) {
-            my $uid = $1 if /^.*\/(.+)$/;
-            $ref->{$uid} = {
+            $user = $1 if /^.*\/(.+)$/;
+            $ref->{$user} = {
                 %{$result->{'entry'}->{$_}->{'apps:name'}},
                 %{$result->{'entry'}->{$_}->{'apps:login'}},
                 %{$result->{'entry'}->{$_}->{'apps:quota'}}
