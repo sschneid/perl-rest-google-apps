@@ -1,0 +1,30 @@
+=head1 NAME
+
+REST::Google::Apps::Provisioning - A Perl library to Google's RESTful Apps API
+
+=head1 SYNOPSIS
+
+  use REST::Google::Apps::Provisioning
+
+  $google = REST::Google::Apps::Provisioning->new(
+      domain   => 'company.com',
+      username => 'admin',
+      password => 'g00gl34pp5!'
+  );
+
+  $user->{'jsmith'} = $google->getUser( 'jsmith' );
+
+=head1 DESCRIPTION
+
+REST::Google::Apps::Provisioning provides a Perl interface to Google's
+RESTful Apps API.
+
+This module is currently a work-in-progress.  Please e-mail with problems,
+bug fixes, comments and complaints.
+
+=head1 AUTHOR
+
+Scott Schneider <sschneid@gmail.com>
+
+=cut
+
