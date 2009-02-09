@@ -105,6 +105,8 @@ sub getGroup {
     return( $ref );
 }
 
+sub getAllGroups { return shift->getGroup(); }
+
 
 
 sub getNickname {
@@ -139,6 +141,8 @@ sub getNickname {
 
     return( $ref );
 }
+
+sub getAllNicknames { return shift->getNickname(); }
 
 
 
@@ -176,6 +180,8 @@ sub getUser {
 
     return( $ref );
 }
+
+sub getAllUsers { return shift->getUser(); }
 
 
 
