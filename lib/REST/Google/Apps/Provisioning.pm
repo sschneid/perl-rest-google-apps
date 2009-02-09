@@ -72,6 +72,43 @@ sub authenticate {
 }
 
 
+
+sub createUser {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
+    $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" suspended="false" />\n);
+    $body .= qq(  <apps:quota limit="$arg->{'quotaLimitInMB'}" />\n)if $arg->{'quotaLimitInMB'}; 
+    $body .= qq(  <apps:name familyName="$arg->{'familyName'}" givenName="$arg->{'givenName'}" />\n);
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'POST',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    my ( $ref );
+
+    $ref->{$arg->{'username'}} = {
+        %{$result->{'apps:name'}},
+        %{$result->{'apps:login'}},
+        %{$result->{'apps:quota'}}
+    };
+
+    return( $ref );
+}
+
+
+
 sub getGroup {
     my $self  = shift;
     my $group = shift;
@@ -82,7 +119,7 @@ sub getGroup {
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/group/2.0);
     $url .= "/$group" if $group;
 
-    my $result = $self->_request( $url ) || return( 0 );
+    my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
     my ( $ref );
 
@@ -119,7 +156,7 @@ sub getNickname {
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0);
     $url .= "/$nick" if $nick;
 
-    my $result = $self->_request( $url ) || return( 0 );
+    my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
     my ( $ref );
 
@@ -156,7 +193,7 @@ sub getUser {
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
     $url .= "/$user" if $user;
 
-    my $result = $self->_request( $url ) || return( 0 );
+    my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
     my ( $ref );
 
@@ -187,18 +224,44 @@ sub getAllUsers { return shift->getUser(); }
 
 sub _request {
     my $self = shift;
-    my $url  = shift;
 
-    my $request = HTTP::Request->new( 'GET' => $url );
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $request = HTTP::Request->new( $arg->{'method'} => $arg->{'url'} );
 
     $request->header( 'Content-Type'  => 'application/atom+xml' );
     $request->header( 'Authorization' => 'GoogleLogin auth=' . $self->{'token'} );
+
+    if ( $arg->{'body'} ) {
+        $request->header( 'Content-Length' => length( $arg->{'body'} ) );
+        $request->content( $arg->{'body'} );
+    }
 
     my $response = $self->{'lwp'}->request( $request );
 
     $response->is_success() || return( 0 );
 
     return( $self->{'xml'}->XMLin( $response->content() ) );
+}
+
+
+
+sub _xmlpre {
+    ( my $xml = << '    END' ) =~ s/^\s+//gm;
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:apps="http://schemas.google.com/apps/2006">
+    END
+
+    return( $xml );
+}
+
+sub _xmlpost {
+    ( my $xml = << '    END' ) =~ s/^\s+//gm;
+        </atom:entry>
+    END
+
+    return( $xml );
 }
 
 
