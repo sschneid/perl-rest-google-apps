@@ -58,6 +58,18 @@ B<Example>
   )
   || die "Could not authenticate";
 
+=item createUser ( USER )
+
+B<Example>
+
+  $user->{'jsmith'} = $google->createUser(
+      username   => 'jsmith',
+      givenName  => 'Joseph',
+      familyName => 'Smith',
+      password   => 'j5m1thp455w0rd!'
+  )
+  || die "Could not create user";
+
 =item getGroup ( GROUP )
 
 =item getAllGroups
