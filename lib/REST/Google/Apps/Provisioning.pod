@@ -22,6 +22,66 @@ RESTful Apps API.
 This module is currently a work-in-progress.  Please e-mail with problems,
 bug fixes, comments and complaints.
 
+=head1 CONSTRUCTOR
+
+=over 4
+
+=item new ( DOMAIN, AUTH )
+
+Creates a new B<REST::Google::Apps::Provisioning> object.  A domain parameter
+is required.
+
+Supplying authentication information to the constructor is optional , but needs
+to happen either here or with a call to the B<authenticate> method.
+
+B<Example>
+
+  $google = REST::Google::Apps::Provisioning->new(
+      domain   => 'company.com',
+      username => 'admin',
+      password => 'g00gl34pp5!'
+  );
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item authenticate ( AUTH )
+
+B<Example>
+
+  $google->authenticate(
+      username => 'admin',
+      password => 'g00gl34pp5!'
+  )
+  || die "Could not authenticate";
+
+=item getGroup ( GROUP )
+
+=item getAllGroups
+
+=item getNickname ( NICKNAME )
+
+=item getAllNicknames
+
+Retrieve a list of all nicknames.  This can also be accomplished by calling the
+B<getNickname> method with no arguments.
+
+=item getUser ( USER )
+
+B<Example>
+
+  $user->{'jsmith'} = $google->getUser( 'jsmith' );
+
+=item getAllUsers
+
+Retrieve a list of all users.  This can also be accomplished by calling the
+B<getUser> method with no arguments.
+
+=back
+
 =head1 AUTHOR
 
 Scott Schneider <sschneid@gmail.com>
