@@ -86,7 +86,8 @@ sub createUser {
     $body  = $self->_xmlpre();
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
     $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" suspended="false" />\n);
-    $body .= qq(  <apps:quota limit="$arg->{'quotaLimitInMB'}" />\n)if $arg->{'quotaLimitInMB'}; 
+    $body .= qq(  <apps:login hashFunctionName="$arg->{'passwordHashFunction'}" />\n) if $arg->{'passwordHashFunction'}; 
+    $body .= qq(  <apps:quota limit="$arg->{'quotaLimitInMB'}" />\n) if $arg->{'quotaLimitInMB'}; 
     $body .= qq(  <apps:name familyName="$arg->{'familyName'}" givenName="$arg->{'givenName'}" />\n);
     $body .= $self->_xmlpost();
 
@@ -105,6 +106,25 @@ sub createUser {
     };
 
     return( $ref );
+}
+
+
+
+sub deleteUser {
+    my $self = shift;
+    my $user = shift;
+
+    $self->{'token'}
+    || croak qq(Can't call getUser without first authenticating);
+
+    $user
+    || croak qq(A user must be specified);
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$user);
+
+    my $result = $self->_request( 'method' => 'DELETE', 'url' => $url ) || return( 0 );
+
+    return( 1 ) if $result;
 }
 
 
@@ -218,6 +238,8 @@ sub getUser {
     return( $ref );
 }
 
+
+
 sub getAllUsers { return shift->getUser(); }
 
 
@@ -241,6 +263,7 @@ sub _request {
     my $response = $self->{'lwp'}->request( $request );
 
     $response->is_success() || return( 0 );
+    $response->content()    || return( 1 );
 
     return( $self->{'xml'}->XMLin( $response->content() ) );
 }

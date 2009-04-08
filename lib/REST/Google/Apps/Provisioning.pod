@@ -50,6 +50,8 @@ B<Example>
 
 =item authenticate ( AUTH )
 
+Authenticate a session.
+
 B<Example>
 
   $google->authenticate(
@@ -69,6 +71,12 @@ B<Example>
       password   => 'j5m1thp455w0rd!'
   )
   || die "Could not create user";
+
+=item deleteUser ( USER )
+
+B<Example>
+
+  delete $user->{'jsmith'} if $google->deleteUser( 'jsmith' );
 
 =item getGroup ( GROUP )
 
