@@ -176,6 +176,10 @@ sub updateUser {
         $body .= qq(  <apps:name familyName="$arg->{'familyName'}" givenName="$arg->{'givenName'}" />\n);
     }
 
+    if ( $arg->{'password'} ) {
+        $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" suspended="false" />\n);
+    }
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
