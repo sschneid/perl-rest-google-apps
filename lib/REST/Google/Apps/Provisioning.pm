@@ -108,16 +108,10 @@ sub createUser {
     return( $ref );
 }
 
-
-
 sub deleteUser {
     my $self = shift;
-    my $user = shift;
 
-    $self->{'token'}
-    || croak qq(Can't call getUser without first authenticating);
-
-    $user
+    my $user = shift
     || croak qq(A user must be specified);
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$user);
@@ -127,14 +121,77 @@ sub deleteUser {
     return( 1 ) if $result;
 }
 
+sub getUser {
+    my $self = shift;
+    my $user = shift;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
+    $url .= "/$user" if $user;
+
+    my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
+
+    my ( $ref );
+
+    unless ( $user ) {
+        foreach ( keys %{$result->{'entry'}} ) {
+            $user = $1 if /^.*\/(.+)$/;
+            $ref->{$user} = {
+                %{$result->{'entry'}->{$_}->{'apps:name'}},
+                %{$result->{'entry'}->{$_}->{'apps:login'}},
+                %{$result->{'entry'}->{$_}->{'apps:quota'}}
+            }
+        }
+    }
+    else {
+        $ref->{$user} = {
+            %{$result->{'apps:name'}},
+            %{$result->{'apps:login'}},
+            %{$result->{'apps:quota'}}
+        };
+    }
+
+    return( $ref );
+}
+
+sub getAllUsers { return shift->getUser(); }
+
+sub updateUser {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $user = $self->getUser( $arg->{'username'} );
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$arg->{'username'});
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
+
+    if ( $arg->{'givenName'} || $arg->{'familyName'} ) {
+        $arg->{'givenName'}  ||= $user->{$arg->{'username'}}->{'givenName'};
+        $arg->{'familyName'} ||= $user->{$arg->{'username'}}->{'familyName'};
+        $body .= qq(  <apps:name familyName="$arg->{'familyName'}" givenName="$arg->{'givenName'}" />\n);
+    }
+
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'PUT',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
 
 
 sub getGroup {
     my $self  = shift;
     my $group = shift;
-
-    $self->{'token'}
-    || croak qq(Can't call getGroup without first authenticating);
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/group/2.0);
     $url .= "/$group" if $group;
@@ -170,9 +227,6 @@ sub getNickname {
     my $self = shift;
     my $nick = shift;
 
-    $self->{'token'}
-    || croak qq(Can't call getNickname without first authenticating);
-
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0);
     $url .= "/$nick" if $nick;
 
@@ -203,49 +257,11 @@ sub getAllNicknames { return shift->getNickname(); }
 
 
 
-sub getUser {
-    my $self = shift;
-    my $user = shift;
-
-    $self->{'token'}
-    || croak qq(Can't call getUser without first authenticating);
-
-    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
-    $url .= "/$user" if $user;
-
-    my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
-
-    my ( $ref );
-
-    unless ( $user ) {
-        foreach ( keys %{$result->{'entry'}} ) {
-            $user = $1 if /^.*\/(.+)$/;
-            $ref->{$user} = {
-                %{$result->{'entry'}->{$_}->{'apps:name'}},
-                %{$result->{'entry'}->{$_}->{'apps:login'}},
-                %{$result->{'entry'}->{$_}->{'apps:quota'}}
-            }
-        }
-    }
-    else {
-        $ref->{$user} = {
-            %{$result->{'apps:name'}},
-            %{$result->{'apps:login'}},
-            %{$result->{'apps:quota'}}
-        };
-    }
-
-    return( $ref );
-}
-
-
-
-sub getAllUsers { return shift->getUser(); }
-
-
-
 sub _request {
     my $self = shift;
+
+    $self->{'token'}
+    || croak qq(Authenticate first!);
 
     my ( $arg );
     %{$arg} = @_;
