@@ -78,16 +78,15 @@ B<Example>
 
   delete $user->{'jsmith'} if $google->deleteUser( 'jsmith' );
 
-=item getGroup ( GROUP )
+=item updateUser ( USER )
 
-=item getAllGroups
+B<Example>
 
-=item getNickname ( NICKNAME )
-
-=item getAllNicknames
-
-Retrieve a list of all nicknames.  This can also be accomplished by calling the
-B<getNickname> method with no arguments.
+  $google->updateUser(
+      username => 'jsmith',
+      givenName => 'Joey'
+  )
+  || die "Could not update user";
 
 =item getUser ( USER )
 
@@ -99,6 +98,17 @@ B<Example>
 
 Retrieve a list of all users.  This can also be accomplished by calling the
 B<getUser> method with no arguments.
+
+=item getGroup ( GROUP )
+
+=item getAllGroups
+
+=item getNickname ( NICKNAME )
+
+=item getAllNicknames
+
+Retrieve a list of all nicknames.  This can also be accomplished by calling the
+B<getNickname> method with no arguments.
 
 =back
 
