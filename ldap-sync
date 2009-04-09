@@ -1,0 +1,73 @@
+#!/usr/bin/perl
+
+# This is an example of syncing a Google Apps userbase with an existing LDAP base
+# (assuming LDAP is authoritative)
+
+use Net::LDAP;
+use REST::Google::Apps::Provisioning;
+
+# Connect and authenticate to Google
+my $r1 = REST::Google::Apps::Provisioning->new(
+    domain => 'company.com'
+)
+|| die "r1: Could not construct\n";
+$r1->authenticate(
+    username => 'admin',
+    password => 'p455w0rd'
+)
+|| die "r1: Could not authenticate.\n";
+
+# Get a list of Google users
+my $users->{'google'} = $r1->getAllUsers();
+
+# Connect and authenticate to LDAP
+my $l1 = Net::LDAP->new(
+    'ldaps://ldap.company.com:636'
+)
+|| die "l1: Could not construct\n";
+$l1->bind(
+    'uid=admin,ou=Administrators,ou=TopologyManagement,o=NetscapeRoot',
+    password => 'p455w0rd'
+)
+|| die "l1: Could not authenticate\n";
+
+# Get a list of LDAP users
+my $result = $l1->search(
+    base => 'ou=People,dc=company,dc=com',
+    filter => '(objectClass=inetorgperson)'
+);
+
+foreach my $entry ( $result->all_entries() ) {
+    my $uid = $entry->get_value( 'uid' );
+    foreach my $attr ( $entry->attributes ) {
+        my $val = [ $entry->get_value( $attr ) ];
+        $users->{'ldap'}->{$uid}->{$attr} = @{$val} > 1 ? $val : $val->[0];
+    }
+}
+
+# Add LDAP users not in Google
+foreach my $user ( keys %{$users->{'ldap'}} ) {
+    unless ( $users->{'google'}->{$user} ) {
+        print "Added $user\n";
+        $r1->createUser(
+            username   => $user,
+            givenName  => $users->{'ldap'}->{$user}->{'givenName'},
+            familyName => $users->{'ldap'}->{$user}->{'sn'},
+            password   => $users->{'ldap'}->{$user}->{'userPassword'},
+            hashFunctionName => 'ssha'
+        ) || print "\tfail!\n";
+    }
+}
+
+# Delete Google users not in LDAP
+foreach my $user ( keys %{$users->{'google'}} ) {
+    next if $users->{'google'}->{$user}->{'admin'} eq 'true';
+
+    unless ( $users->{'ldap'}->{$user} ) {
+        print "Deleted $user\n";
+        $r1->deleteUser( $user ) || print "\tfail!\n";
+    }
+}
+
+
+
