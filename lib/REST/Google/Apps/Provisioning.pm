@@ -177,7 +177,11 @@ sub updateUser {
     }
 
     if ( $arg->{'password'} ) {
-        $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" suspended="false" />\n);
+        $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" />\n);
+    }
+
+    if ( $arg->{'suspended'} ) {
+        $body .= qq(  <apps:login userName="$arg->{'username'}" suspended="$arg->{'suspended'}" />\n);
     }
 
     $body .= $self->_xmlpost();
