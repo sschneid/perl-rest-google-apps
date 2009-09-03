@@ -103,6 +103,16 @@ B<getUser> method with no arguments.
 
 =item getAllGroups
 
+=item createNickname ( NICKNAME )
+
+B<Example>
+
+  $google->createNickname(
+      username => 'jsmith',
+      nickname => 'joe'
+  )
+  || die "Could not create nickname";
+
 =item getNickname ( NICKNAME )
 
 =item getAllNicknames

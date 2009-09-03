@@ -231,6 +231,37 @@ sub getAllGroups { return shift->getGroup(); }
 
 
 
+sub createNickname {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#nickname" />\n);
+    $body .= qq(  <apps:login userName="$arg->{'username'}" />\n);
+    $body .= qq(  <apps:nickname name="$arg->{'nickname'}" />\n);
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'POST',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    my ( $ref );
+
+    $ref->{$arg->{'username'}} = {
+        %{$result->{'apps:nickname'}}
+    };
+
+    return( $ref );
+}
+
 sub getNickname {
     my $self = shift;
     my $nick = shift;
