@@ -113,6 +113,12 @@ B<Example>
   )
   || die "Could not create nickname";
 
+=item deleteNickname ( NICKNAME )
+
+B<Example>
+
+  $google->deleteNickname( 'joe' );
+
 =item getNickname ( NICKNAME )
 
 =item getAllNicknames

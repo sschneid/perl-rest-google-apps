@@ -262,6 +262,19 @@ sub createNickname {
     return( $ref );
 }
 
+sub deleteNickname {
+    my $self = shift;
+
+    my $nickname = shift
+    || croak qq(A nickname must be specified);
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0/$nickname);
+
+    my $result = $self->_request( 'method' => 'DELETE', 'url' => $url ) || return( 0 );
+
+    return( 1 ) if $result;
+}
+
 sub getNickname {
     my $self = shift;
     my $nick = shift;
