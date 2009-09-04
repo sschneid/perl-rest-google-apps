@@ -73,6 +73,31 @@ sub authenticate {
 
 
 
+sub createLabel {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/label);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <apps:property name="label" value="$arg->{'label'}" />\n);
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'POST',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
+
+
 sub enableForwarding {
     my $self = shift;
 

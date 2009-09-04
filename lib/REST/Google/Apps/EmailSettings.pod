@@ -63,6 +63,16 @@ B<Example>
   )
   || die "Could not authenticate";
 
+=item createLabel ( USERNAME, LABEL )
+
+B<Example>
+
+  $google->createLabel(
+      username => 'jsmith',
+      label    => 'Receipts'
+  )
+  || die "Could not create label";
+
 =item enableForwarding ( USERNAME, FORWARDTO, ACTION )
 
 B<Example>
