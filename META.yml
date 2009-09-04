@@ -3,7 +3,12 @@ name:                REST-Google-Apps-Provisioning
 version:             1.1.1
 abstract:            A Perl library to Google's RESTful Apps API 
 license:             perl
-distribution_type:   module
 author:
     - Scott Schneider <sschneid@gmail.com>
+distribution_type:   module
+requires:
+    Carp:               0
+    LWP::UserAgent:     0
+    Test::More:         0
+    XML::Simple:        0
 
