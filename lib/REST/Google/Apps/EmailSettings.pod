@@ -1,6 +1,7 @@
 =head1 NAME
 
-REST::Google::Apps::EmailSettings - A Perl library to Google's RESTful Apps API
+REST::Google::Apps::EmailSettings - A Perl library to Google's RESTful Apps
+Email Settings API
 
 =head1 SYNOPSIS
 

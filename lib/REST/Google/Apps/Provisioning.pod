@@ -1,6 +1,7 @@
 =head1 NAME
 
-REST::Google::Apps::Provisioning - A Perl library to Google's RESTful Apps API
+REST::Google::Apps::Provisioning - A Perl library to Google's RESTful Apps
+Provisioning API
 
 =head1 SYNOPSIS
 
