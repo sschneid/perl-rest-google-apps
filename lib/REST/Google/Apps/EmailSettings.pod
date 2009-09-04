@@ -75,6 +75,98 @@ B<Example>
   )
   || die "Could not create label";
 
+=item createFilter ( USERNAME, CRITERIA, ACTION )
+
+Create a new filter.
+
+One or more of the following parameters is required to define the criteria
+for the filter:
+
+=over 4
+
+B<from> specifies the e-mail address of the sender.
+
+B<Example>
+
+  from => 'j.q.public@company.com'
+
+B<to> specifies the e-mail address the message was sent to.
+
+B<Example>
+
+  to => 'jsmith@example.net'
+
+B<subject> filters for a string anywhere in the e-mail's subject line.
+
+B<Example>
+
+  subject => 'project'
+
+B<hasWord> filters for a string anywhere in the e-mail's subject line or
+body.
+
+B<Example>
+
+  hasWord => 'work'
+
+B<noWord> specifies that the e-mail cannot have a string anywhere in the
+subject or body.
+
+B<Example>
+
+  noWord => 'proposal'
+
+B<attachment> can be 'true' or 'false', representing whether or not the
+e-mail contains an attachment
+
+B<Example>
+
+  attachment => 'true'
+
+=back
+
+One or more of the following parameters is required to define the action
+to be taken when the specified criteria has been met:
+
+=over 4
+
+B<label> specifies the name of the label to apply to the message.  The
+label must already exist to be used (see the B<createLabel> function).
+
+B<Example>
+
+  label => 'Receipts'
+
+B<markAsRead> can be 'true' or 'false', representing whether or not to
+mark the message as read.
+
+  markAsRead => 'true'
+
+B<archive> can be 'true' or 'false', representing whether or not to 
+archive the message if the criteria is met.
+
+B<Example>
+
+  archive => 'true'
+
+=back
+
+B<Examples>
+
+  $google->createFilter(
+      username => 'jsmith',
+      hasWord  => 'receipt',
+      label    => 'Receipts'
+  )
+  || die "Could not create filter";
+
+  $google->createFilter(
+      username => 'jsmith',
+      from     => 'spam@example.net',
+      archive  => 'true'
+  )
+  || die "Could not create filter";
+
 =item enableWebClips ( USERNAME )
 
 =item disableWebClips ( USERNAME )

@@ -99,6 +99,60 @@ sub createLabel {
 }
 
 
+
+sub createFilter {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ username / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    unless (
+        $arg->{'from'} || $arg->{'to'} || $arg->{'subject'} || $arg->{'hasWord'} || $arg->{'noWord'} || $arg->{'attachment'}
+    ) {
+        croak( "Missing required filter criteria" );
+    }
+
+    unless (
+        $arg->{'label'} || $arg->{'markAsRead'} || $arg->{'archive'}
+    ) {
+        croak( "Missing required filter action" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/filter);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+
+    foreach my $param ( qw/ from to subject / ) {
+        $body .= qq(  <apps:property name="$param" value="$arg->{$param}" />\n) if $arg->{$param};
+    }
+
+    $body .= qq(  <apps:property name="hasTheWord" value="$arg->{'hasWord'}" />\n) if $arg->{'hasWord'};
+    $body .= qq(  <apps:property name="doesNotHaveTheWord" value="$arg->{'noWord'}" />\n) if $arg->{'noWord'};
+    $body .= qq(  <apps:property name="hasAttachment" value="$arg->{'attachment'}" />\n) if $arg->{'attachment'};
+
+    $body .= qq(  <apps:property name="label" value="$arg->{'label'}" />\n) if $arg->{'label'};
+    $body .= qq(  <apps:property name="shouldMarkAsRead" value="$arg->{'markAsRead'}" />\n) if $arg->{'markAsRead'};
+    $body .= qq(  <apps:property name="shouldArchive" value="$arg->{'archive'}" />\n) if $arg->{'archive'};
+
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'POST',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
+
+
 sub enableWebClips {
     my $self = shift;
 
