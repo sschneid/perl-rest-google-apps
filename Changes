@@ -1,5 +1,10 @@
 Revision history for REST-Google-Apps-Provisioning
 
+1.1.2
+* Fri Sep 04 2009 Scott Schneider <sschneid@gmail.com>
+- Added createNickname and deleteNickname functions
+- Fixed CPAN module requirement specifications
+
 1.1.1
 * Tue Jun 23 2009 Scott Schneider <sschneid@gmail.com>
 - initial version
