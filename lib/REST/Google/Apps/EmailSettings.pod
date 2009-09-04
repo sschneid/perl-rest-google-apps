@@ -84,40 +84,51 @@ for the filter:
 
 =over 4
 
-B<from> specifies the e-mail address of the sender.
+=item from
+
+Specifies the e-mail address of the sender.
 
 B<Example>
 
   from => 'j.q.public@company.com'
 
-B<to> specifies the e-mail address the message was sent to.
+=item to
+
+Specifies the e-mail address the message was sent to.
 
 B<Example>
 
   to => 'jsmith@example.net'
 
-B<subject> filters for a string anywhere in the e-mail's subject line.
+=item subject
+
+Filters for a string anywhere in the e-mail's subject line.
 
 B<Example>
 
   subject => 'project'
 
-B<hasWord> filters for a string anywhere in the e-mail's subject line or
-body.
+=item hasWord
+
+Filters for a string anywhere in the e-mail's subject line or body.
 
 B<Example>
 
   hasWord => 'work'
 
-B<noWord> specifies that the e-mail cannot have a string anywhere in the
-subject or body.
+=item noWord
+
+Specifies that the e-mail cannot have a string anywhere in the subject or
+body.
 
 B<Example>
 
   noWord => 'proposal'
 
-B<attachment> can be 'true' or 'false', representing whether or not the
-e-mail contains an attachment
+=item attachment
+
+Can be 'true' or 'false', representing whether or not the e-mail contains
+an attachment
 
 B<Example>
 
@@ -130,20 +141,26 @@ to be taken when the specified criteria has been met:
 
 =over 4
 
-B<label> specifies the name of the label to apply to the message.  The
-label must already exist to be used (see the B<createLabel> function).
+=item label
+
+Specifies the name of the label to apply to the message.  The label must
+already exist to be used (see the B<createLabel> function).
 
 B<Example>
 
   label => 'Receipts'
 
-B<markAsRead> can be 'true' or 'false', representing whether or not to
-mark the message as read.
+=item markAsRead
+
+Can be 'true' or 'false', representing whether or not to mark the message
+as read.
 
   markAsRead => 'true'
 
-B<archive> can be 'true' or 'false', representing whether or not to 
-archive the message if the criteria is met.
+=item archive
+
+Can be 'true' or 'false', representing whether or not to archive the
+message if the criteria is met.
 
 B<Example>
 
@@ -202,19 +219,24 @@ B<Example>
 
   $google->disableForwarding( username => 'jsmith' );
 
-=back
-
 =item enablePOP ( USERNAME, ENABLEFOR, ACTION )
 
 Enable POP access.
 
-B<action> is an optional parameter defining what Google should do with mail
-once POP access is enabled.  Valid options are 'archive', 'keep' (the
-default), and 'delete'.
+=over 4
 
-B<enableFor> is an optional parameter defining whether to enable POP for
-all mail, or mail from now on.  Valid options are 'all', and 'now' (the
-default).
+=item action
+
+An optional parameter defining what Google should do with mail once POP
+access is enabled.  Valid options are 'archive', 'keep' (the default),
+and 'delete'.
+
+=item enableFor
+
+An optional parameter defining whether to enable POP for all mail, or mail
+from now on.  Valid options are 'all', and 'now' (the default).
+
+=back
 
 B<Example>
 
@@ -233,8 +255,6 @@ B<Example>
 
   $google->disablePOP( username => 'jsmith' );
 
-=back
-
 =item enableIMAP ( USERNAME )
 
 =item disableIMAP ( USERNAME )
@@ -244,6 +264,8 @@ Enable or disable IMAP access.
 B<Example>
 
   $google->enableIMAP( username => 'jsmith' );
+
+=back
 
 =head1 AUTHOR
 
