@@ -26,7 +26,7 @@ bug fixes, comments and complaints.
 
 =over 4
 
-=item new ( DOMAIN, AUTH )
+=item new ( DOMAIN, USERNAME, PASSWORD )
 
 Creates a new B<REST::Google::Apps::Provisioning> object.  A domain parameter
 is required.
@@ -48,7 +48,7 @@ B<Example>
 
 =over 4
 
-=item authenticate ( AUTH )
+=item authenticate ( USERNAME, PASSWORD )
 
 Authenticate a session.
 
@@ -60,7 +60,7 @@ B<Example>
   )
   || die "Could not authenticate";
 
-=item createUser ( USER )
+=item createUser ( USERNAME, GIVENNAME, FAMILYNAME, PASSWORD )
 
 B<Example>
 
@@ -78,7 +78,7 @@ B<Example>
 
   delete $user->{'jsmith'} if $google->deleteUser( 'jsmith' );
 
-=item updateUser ( USER )
+=item updateUser ( USER, ATTR )
 
 B<Example>
 
@@ -103,7 +103,7 @@ B<getUser> method with no arguments.
 
 =item getAllGroups
 
-=item createNickname ( NICKNAME )
+=item createNickname ( USERNAME, NICKNAME )
 
 B<Example>
 
