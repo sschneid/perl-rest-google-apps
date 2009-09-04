@@ -12,7 +12,7 @@ REST::Google::Apps::Provisioning - A Perl library to Google's RESTful Apps API
       password => 'g00gl34pp5!'
   );
 
-  $user->{'jsmith'} = $google->getUser( 'jsmith' );
+  $user->{'jsmith'} = $google->getUser( username => 'jsmith' );
 
 =head1 DESCRIPTION
 
