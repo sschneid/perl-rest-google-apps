@@ -197,6 +197,69 @@ sub disableForwarding {
 
 
 
+sub enablePOP {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/pop);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+
+    $body .= qq(  <apps:property name="enable" value="true" />\n);
+
+    if ( $arg->{'enableFor'} ) {
+        $body .= qq( <apps:property name="enableFor" value="$arg->{'enableFor'}" />\n);
+    }
+    else {
+        $body .= qq( <apps:property name="enableFor" value="MAIL_FROM_NOW_ON" />\n);
+    }
+
+    if ( $arg->{'action'} ) {
+        $body .= qq(  <apps:property name="action" value="$arg->{'action'}" />\n);
+    }
+    else {
+        $body .= qq(  <apps:property name="action" value="KEEP" />\n);
+    }
+
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'PUT',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+
+}
+
+sub disablePOP {
+    my $self = shift;
+    my $user = shift;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$user/pop);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <apps:property name="enable" value="false" />\n);
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'PUT',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
+
+
 sub _request {
     my $self = shift;
 

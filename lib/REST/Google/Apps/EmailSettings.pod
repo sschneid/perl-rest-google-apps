@@ -108,6 +108,29 @@ B<Example>
 
 =back
 
+=item enablePOP ( USERNAME, ENABLEFOR, ACTION )
+
+Enable POP access.
+
+B<Example>
+
+  $google->enablePOP(
+      username   => 'jsmith',
+      enableFor  => 'all_mail',
+      action     => 'archive'
+  )
+  || die "Could not enable POP";
+
+=item disablePOP ( USERNAME )
+
+Disable POP access.
+
+B<Example>
+
+  $google->disablePOP( 'jsmith' );
+
+=back
+
 =head1 AUTHOR
 
 Scott Schneider <sschneid@gmail.com>
