@@ -224,7 +224,7 @@ sub enablePOP {
     }
 
     if ( $arg->{'action'} ) {
-        $arg->{'action'} = uc( $arg->{'action'};
+        $arg->{'action'} = uc( $arg->{'action'} );
 
         $body .= qq(  <apps:property name="action" value="$arg->{'action'}" />\n);
     }
