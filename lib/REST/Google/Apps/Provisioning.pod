@@ -76,7 +76,7 @@ B<Example>
 
 B<Example>
 
-  delete $user->{'jsmith'} if $google->deleteUser( 'jsmith' );
+  delete $user->{'jsmith'} if $google->deleteUser( username => 'jsmith' );
 
 =item updateUser ( USER, ATTR )
 
@@ -92,7 +92,7 @@ B<Example>
 
 B<Example>
 
-  $user->{'jsmith'} = $google->getUser( 'jsmith' );
+  $user->{'jsmith'} = $google->getUser( username => 'jsmith' );
 
 =item getAllUsers
 
@@ -117,7 +117,7 @@ B<Example>
 
 B<Example>
 
-  $google->deleteNickname( 'joe' );
+  $google->deleteNickname( nickname => 'joe' );
 
 =item getNickname ( NICKNAME )
 

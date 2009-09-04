@@ -99,9 +99,11 @@ sub createLabel {
 
 sub enableWebClips {
     my $self = shift;
-    my $user = shift;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$user/webclip);
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/webclip);
 
     my ( $body );
 
@@ -120,9 +122,11 @@ sub enableWebClips {
 
 sub disableWebClips {
     my $self = shift;
-    my $user = shift;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$user/webclip);
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/webclip);
 
     my ( $body );
 
@@ -178,9 +182,11 @@ sub enableForwarding {
 
 sub disableForwarding {
     my $self = shift;
-    my $user = shift;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$user/forwarding);
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/forwarding);
 
     my ( $body );
 
@@ -246,9 +252,11 @@ sub enablePOP {
 
 sub disablePOP {
     my $self = shift;
-    my $user = shift;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$user/pop);
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/pop);
 
     my ( $body );
 
@@ -268,9 +276,11 @@ sub disablePOP {
 
 sub enableIMAP {
     my $self = shift;
-    my $user = shift;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$user/imap);
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/imap);
 
     my ( $body );
 
@@ -289,9 +299,11 @@ sub enableIMAP {
 
 sub disableIMAP {
     my $self = shift;
-    my $user = shift;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$user/imap);
+    my ( $arg );
+    %{$arg} = @_;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/imap);
 
     my ( $body );
 

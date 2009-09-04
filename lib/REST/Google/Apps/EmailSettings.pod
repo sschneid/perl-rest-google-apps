@@ -83,7 +83,7 @@ Enable or disable web clips.
 
 B<Example>
 
-  $google->enableWebClips( 'jsmith' );
+  $google->enableWebClips( username => 'jsmith' );
 
 =item enableForwarding ( USERNAME, FORWARDTO, ACTION )
 
@@ -108,7 +108,7 @@ Disable forwarding.
 
 B<Example>
 
-  $google->disableForwarding( 'jsmith' );
+  $google->disableForwarding( username => 'jsmith' );
 
 =back
 
@@ -139,7 +139,7 @@ Disable POP access.
 
 B<Example>
 
-  $google->disablePOP( 'jsmith' );
+  $google->disablePOP( username => 'jsmith' );
 
 =back
 
@@ -151,7 +151,7 @@ Enable or disable IMAP access.
 
 B<Example>
 
-  $google->enableIMAP( 'jsmith' );
+  $google->enableIMAP( username => 'jsmith' );
 
 =head1 AUTHOR
 

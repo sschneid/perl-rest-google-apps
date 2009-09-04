@@ -111,10 +111,10 @@ sub createUser {
 sub deleteUser {
     my $self = shift;
 
-    my $user = shift
-    || croak qq(A user must be specified);
+    my ( $arg );
+    %{$arg} = @_;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$user);
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$arg->{'username'});
 
     my $result = $self->_request( 'method' => 'DELETE', 'url' => $url ) || return( 0 );
 
@@ -123,19 +123,21 @@ sub deleteUser {
 
 sub getUser {
     my $self = shift;
-    my $user = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
-    $url .= "/$user" if $user;
+    $url .= "/$arg->{'username'}" if $arg->{'username'};
 
     my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
     my ( $ref );
 
-    unless ( $user ) {
+    unless ( $arg->{'username'} ) {
         foreach ( keys %{$result->{'entry'}} ) {
-            $user = $1 if /^.*\/(.+)$/;
-            $ref->{$user} = {
+            $arg->{'username'} = $1 if /^.*\/(.+)$/;
+            $ref->{$arg->{'username'}} = {
                 %{$result->{'entry'}->{$_}->{'apps:name'}},
                 %{$result->{'entry'}->{$_}->{'apps:login'}},
                 %{$result->{'entry'}->{$_}->{'apps:quota'}}
@@ -143,7 +145,7 @@ sub getUser {
         }
     }
     else {
-        $ref->{$user} = {
+        $ref->{$arg->{'username'}} = {
             %{$result->{'apps:name'}},
             %{$result->{'apps:login'}},
             %{$result->{'apps:quota'}}
@@ -199,26 +201,28 @@ sub updateUser {
 
 sub getGroup {
     my $self  = shift;
-    my $group = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/group/2.0);
-    $url .= "/$group" if $group;
+    $url .= "/$arg->{'group'}" if $arg->{'group'};
 
     my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
     my ( $ref );
 
-    unless ( $group ) {
+    unless ( $arg->{'group'} ) {
         foreach ( keys %{$result->{'entry'}} ) {
-            $group = $1 if /^.*\/(.+)$/;
-            $ref->{$group} = {
+            $arg->{'group'} = $1 if /^.*\/(.+)$/;
+            $ref->{$arg->{'group'}} = {
                 %{$result->{'entry'}->{$_}->{'apps:name'}},
                 %{$result->{'entry'}->{$_}->{'apps:login'}}
             }
         }
     }
     else {
-        $ref->{$group} = {
+        $ref->{$arg->{'group'}} = {
             %{$result->{'apps:name'}},
             %{$result->{'apps:login'}}
         };
@@ -265,10 +269,10 @@ sub createNickname {
 sub deleteNickname {
     my $self = shift;
 
-    my $nickname = shift
-    || croak qq(A nickname must be specified);
+    my ( $arg );
+    %{$arg} = @_;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0/$nickname);
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0/$arg->{'nickname'});
 
     my $result = $self->_request( 'method' => 'DELETE', 'url' => $url ) || return( 0 );
 
@@ -277,26 +281,28 @@ sub deleteNickname {
 
 sub getNickname {
     my $self = shift;
-    my $nick = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0);
-    $url .= "/$nick" if $nick;
+    $url .= "/$arg->{'nickname'}" if $arg->{'nickname'};
 
     my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
     my ( $ref );
 
-    unless ( $nick ) {
+    unless ( $arg->{'nickname'} ) {
         foreach ( keys %{$result->{'entry'}} ) {
-            $nick = $1 if /^.*\/(.+)$/;
-            $ref->{$nick} = {
+            $arg->{'nickname'} = $1 if /^.*\/(.+)$/;
+            $ref->{$arg->{'nickname'}} = {
                 %{$result->{'entry'}->{$_}->{'apps:login'}},
                 %{$result->{'entry'}->{$_}->{'apps:nickname'}}
             }
         }
     }
     else {
-        $ref->{$nick} = {
+        $ref->{$arg->{'nickname'}} = {
             %{$result->{'apps:login'}},
             %{$result->{'apps:nickname'}}
         };
