@@ -157,6 +157,8 @@ sub enableForwarding {
     $body .= qq(  <apps:property name="forwardTo" value="$arg->{'forwardTo'}" />\n);
 
     if ( $arg->{'action'} ) {
+        $arg->{'action'} = uc( $arg->{'action'} );
+
         $body .= qq(  <apps:property name="action" value="$arg->{'action'}" />\n);
     }
     else {
@@ -212,6 +214,9 @@ sub enablePOP {
     $body .= qq(  <apps:property name="enable" value="true" />\n);
 
     if ( $arg->{'enableFor'} ) {
+        if ( $arg->{'enableFor'} eq 'all' ) { $arg->{'enableFor'} = 'ALL_MAIL'; }
+        if ( $arg->{'enableFor'} eq 'now' ) { $arg->{'enableFor'} = 'MAIL_FROM_NOW_ON'; }
+
         $body .= qq( <apps:property name="enableFor" value="$arg->{'enableFor'}" />\n);
     }
     else {
@@ -219,6 +224,8 @@ sub enablePOP {
     }
 
     if ( $arg->{'action'} ) {
+        $arg->{'action'} = uc( $arg->{'action'};
+
         $body .= qq(  <apps:property name="action" value="$arg->{'action'}" />\n);
     }
     else {

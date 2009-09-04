@@ -89,6 +89,10 @@ B<Example>
 
 Enable forwarding.
 
+B<action> is an optional parameter defining what Google should do with mail
+once forwarding is enabled.  Valid options are 'archive', 'keep' (the
+default), and 'delete'.
+
 B<Example>
 
   $google->enableForwarding(
@@ -112,11 +116,19 @@ B<Example>
 
 Enable POP access.
 
+B<action> is an optional parameter defining what Google should do with mail
+once POP access is enabled.  Valid options are 'archive', 'keep' (the
+default), and 'delete'.
+
+B<enableFor> is an optional parameter defining whether to enable POP for
+all mail, or mail from now on.  Valid options are 'all', and 'now' (the
+default).
+
 B<Example>
 
   $google->enablePOP(
       username   => 'jsmith',
-      enableFor  => 'all_mail',
+      enableFor  => 'all',
       action     => 'archive'
   )
   || die "Could not enable POP";
