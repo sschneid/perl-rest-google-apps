@@ -17,8 +17,7 @@ sub new {
     my ( $arg );
     %{$arg} = @_;
 
-    $self->{'domain'} = $arg->{'domain'}
-    || croak qq(Missing required 'domain' argument);
+    $self->{'domain'} = $arg->{'domain'} || croak( "Missing required 'domain' argument" );
 
     $self->{'lwp'} = LWP::UserAgent->new();
     $self->{'lwp'}->agent( 'RESTGoogleAppsProvisioning/' . $VERSION );
@@ -46,9 +45,8 @@ sub authenticate {
     my ( $arg );
     %{$arg} = @_;
 
-    foreach ( qw/ username password / ) {
-        $arg->{$_}
-        || croak qq(Missing required $_ argument);
+    foreach my $param ( qw/ username password / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
     }
 
     my $response = $self->{'lwp'}->post(
@@ -78,6 +76,10 @@ sub createUser {
 
     my ( $arg );
     %{$arg} = @_;
+
+    foreach my $param ( qw/ username givenName familyName password / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
 
@@ -113,6 +115,10 @@ sub deleteUser {
 
     my ( $arg );
     %{$arg} = @_;
+
+    foreach my $param ( qw/ username / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$arg->{'username'});
 
@@ -162,6 +168,10 @@ sub updateUser {
 
     my ( $arg );
     %{$arg} = @_;
+
+    foreach my $param ( qw/ username / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
 
     my $user = $self->getUser( $arg->{'username'} );
 
@@ -241,6 +251,10 @@ sub createNickname {
     my ( $arg );
     %{$arg} = @_;
 
+    foreach my $param ( qw/ username nickname / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0);
 
     my ( $body );
@@ -271,6 +285,10 @@ sub deleteNickname {
 
     my ( $arg );
     %{$arg} = @_;
+
+    foreach my $param ( qw/ nickname / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0/$arg->{'nickname'});
 
