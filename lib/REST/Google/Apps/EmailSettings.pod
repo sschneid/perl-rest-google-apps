@@ -143,6 +143,16 @@ B<Example>
 
 =back
 
+=item enableIMAP ( USERNAME )
+
+=item disableIMAP ( USERNAME )
+
+Enable or disable IMAP access.
+
+B<Example>
+
+  $google->enableIMAP( 'jsmith' );
+
 =head1 AUTHOR
 
 Scott Schneider <sschneid@gmail.com>
