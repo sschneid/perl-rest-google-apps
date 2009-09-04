@@ -73,6 +73,16 @@ B<Example>
   )
   || die "Could not create label";
 
+=item enableWebClips ( USERNAME )
+
+=item disableWebClips ( USERNAME )
+
+Enable or disable web clips.
+
+B<Example>
+
+  $google->enableWebClips( 'jsmith' );
+
 =item enableForwarding ( USERNAME, FORWARDTO, ACTION )
 
 B<Example>
