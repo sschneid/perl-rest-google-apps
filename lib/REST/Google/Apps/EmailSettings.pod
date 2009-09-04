@@ -65,6 +65,8 @@ B<Example>
 
 =item createLabel ( USERNAME, LABEL )
 
+Create a new label.
+
 B<Example>
 
   $google->createLabel(
@@ -85,6 +87,8 @@ B<Example>
 
 =item enableForwarding ( USERNAME, FORWARDTO, ACTION )
 
+Enable forwarding.
+
 B<Example>
 
   $google->enableForwarding(
@@ -95,6 +99,8 @@ B<Example>
   || die "Could not enable forwarding";
 
 =item disableForwarding ( USERNAME )
+
+Disable forwarding.
 
 B<Example>
 
