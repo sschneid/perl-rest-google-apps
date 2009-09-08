@@ -153,6 +153,38 @@ sub createFilter {
 
 
 
+sub createSendAs {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ username name address / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/sendas);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <apps:property name="name" value="$arg->{'name'}" />\n);
+    $body .= qq(  <apps:property name="address" value="$arg->{'address'}" />\n);
+    $body .= qq(  <apps:property name="replyTo" value="$arg->{'replyTo'}" />\n) if $arg->{'replyTo'};
+    $body .= qq(  <apps:property name="default" value="$arg->{'default'}" />\n) if $arg->{'default'};
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'POST',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
+
+
 sub enableWebClips {
     my $self = shift;
 

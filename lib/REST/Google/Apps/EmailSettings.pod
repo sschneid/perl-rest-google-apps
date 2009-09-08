@@ -185,6 +185,63 @@ B<Examples>
   )
   || die "Could not create filter";
 
+=item createSendAs ( USERNAME, NAME, ADDRESS, REPLYTO, DEFAULT )
+
+Create a send-as alias.
+
+=over 4
+
+=item username
+
+Required.  Specified the username of the mail account.
+
+=back
+
+=over 4
+
+=item name
+
+Required.  The name that will appear in the 'from' field for this user.
+
+=back
+
+=over 4
+
+=item address
+
+Required.  The e-mail address that appears as the origination address for
+emails sent by this user.
+
+=back
+
+=over 4
+
+=item replyTo
+
+Optional.  If set, this address will be included as the reply-to address
+in emails sent using the alias.
+
+=back
+
+=over 4
+
+=item default
+
+Optional.  Can be 'true' or 'false', representing whether or not this alias
+will be become the new default alias to send-as for this user.
+
+=back
+
+B<Example>
+
+  $google->createSendAs(
+    username => 'jsmith',
+    name     => 'Sales',
+    address  => 'sales@company.com',
+    default  => 'true'
+  )
+  || die "Could not create send-as alias";
+
 =item enableWebClips ( USERNAME )
 
 =item disableWebClips ( USERNAME )
