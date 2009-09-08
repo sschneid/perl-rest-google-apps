@@ -433,6 +433,16 @@ B<Example>
 
   $google->enableArrows( username => 'jsmith' );
 
+=item enableSnippets ( USERNAME )
+
+=item disableSnippets ( USERNAME )
+
+Enable or disable snippets of messages in the inbox and when searching.
+
+B<Example>
+
+  $google->enableSnippets( username => 'jsmith' );
+
 =back
 
 =head1 AUTHOR
