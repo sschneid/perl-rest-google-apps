@@ -412,6 +412,16 @@ B<Example>
       pageSize => '50'
   );
 
+=item enableShortcuts ( USERNAME )
+
+=item disableShortcuts ( USERNAME )
+
+Enable or disable keyboard shortcuts.
+
+B<Example>
+
+  $google->enableShortcuts( username => 'jsmith' );
+
 =back
 
 =head1 AUTHOR
