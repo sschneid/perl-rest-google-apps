@@ -422,6 +422,17 @@ B<Example>
 
   $google->enableShortcuts( username => 'jsmith' );
 
+=item enableArrows ( USERNAME )
+
+=item disableArrows ( USERNAME )
+
+Enable or disable arrow-shaped personal indicators ( › and » ) next to
+emails that were sent specifically to the user.
+
+B<Example>
+
+  $google->enableArrows( username => 'jsmith' );
+
 =back
 
 =head1 AUTHOR
