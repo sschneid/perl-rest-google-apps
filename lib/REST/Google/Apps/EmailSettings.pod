@@ -401,6 +401,17 @@ B<Example>
       language => 'de'
   );
 
+=item setPageSize ( USERNAME, PAGESIZE )
+
+Set the number of conversations to be shown per page.
+
+B<Example>
+
+  $google->setPageSize(
+      username => 'jsmith',
+      pageSize => '50'
+  );
+
 =back
 
 =head1 AUTHOR
