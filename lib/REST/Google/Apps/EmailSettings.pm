@@ -442,6 +442,65 @@ sub disableIMAP {
 
 
 
+sub enableVacation {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ username subject message / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/vacation);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <apps:property name="enable" value="true" />\n);
+    $body .= qq(  <apps:property name="subject" value="$arg->{'subject'}" />\n);
+    $body .= qq(  <apps:property name="message" value="$arg->{'message'}" />\n);
+    $body .= qq(  <apps:property name="contactsOnly" value="$arg->{'contactsOnly'}" />\n) if $arg->{'contactsOnly'};
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'PUT',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
+sub disableVacation {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ username / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/vacation);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <apps:property name="enable" value="false" />\n);
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'PUT',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
+
+
 sub _request {
     my $self = shift;
 

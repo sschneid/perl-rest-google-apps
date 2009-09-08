@@ -323,6 +323,53 @@ B<Example>
 
   $google->enableIMAP( username => 'jsmith' );
 
+=item enableVacation ( USERNAME, SUBJECT, MESSAGE, CONTACTSONLY )
+
+Enable a vacation/out-of-office auto-responder.
+
+=over 4
+
+=item subject
+
+The subject line for the vacation auto-responder.
+
+=back
+
+=over 4
+
+=item message
+
+The message body of the vacation auto-responder.  Up to 100 KB is
+allowed.
+
+=back
+
+=over 4
+
+=item contactsOnly
+
+Whether to only send the autoresponse to known contacts.
+
+=back
+
+B<Example>
+
+  $google->enableVacation(
+    username => 'jsmith',
+    subject  => 'Out of the office',
+    message  => 'I will be out of the office until Tuesday.  Please '
+              . 'contact me at 555-5555 for all urgent matters.'
+  )
+  || die "Could not enable vacation auto-responder";
+
+=item disableVacation ( USERNAME )
+
+Disable a vacation auto-responder.
+
+B<Example>
+
+  $google->disableVacation( username => 'jsmith' );
+
 =back
 
 =head1 AUTHOR
