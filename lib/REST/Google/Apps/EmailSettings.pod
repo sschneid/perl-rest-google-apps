@@ -13,7 +13,7 @@ Email Settings API
       password => 'g00gl34pp5!'
   );
 
-  $user->{'jsmith'} = $google->enableForwarding(
+  $google->enableForwarding(
       username  => 'jsmith',
       forwardTo => 'joe@example.net'
   );
