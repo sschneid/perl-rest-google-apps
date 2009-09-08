@@ -557,6 +557,35 @@ sub disableSignature {
 
 
 
+sub setLanguage {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ username language / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/emailsettings/2.0/$self->{'domain'}/$arg->{'username'}/language);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <apps:property name="language" value="$arg->{'language'}" />\n);
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'PUT',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
+
+
 sub _request {
     my $self = shift;
 

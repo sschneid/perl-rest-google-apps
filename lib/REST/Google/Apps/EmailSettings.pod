@@ -390,6 +390,17 @@ B<Example>
 
   $google->disableSignature( username => 'jsmith' );
 
+=item setLanguage ( USERNAME, LANGUAGE )
+
+Updating the display language setting.
+
+B<Example>
+
+  $google->setLanguage(
+      username => 'jsmith',
+      language => 'de'
+  );
+
 =back
 
 =head1 AUTHOR
