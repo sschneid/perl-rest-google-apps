@@ -355,10 +355,10 @@ Whether to only send the autoresponse to known contacts.
 B<Example>
 
   $google->enableVacation(
-    username => 'jsmith',
-    subject  => 'Out of the office',
-    message  => 'I will be out of the office until Tuesday.  Please '
-              . 'contact me at 555-5555 for all urgent matters.'
+      username => 'jsmith',
+      subject  => 'Out of the office',
+      message  => 'I will be out of the office until Tuesday.  Please '
+                . 'contact me at 555-5555 for all urgent matters.'
   )
   || die "Could not enable vacation auto-responder";
 
@@ -369,6 +369,26 @@ Disable a vacation auto-responder.
 B<Example>
 
   $google->disableVacation( username => 'jsmith' );
+
+=item enableSignature ( USERNAME, SIGNATURE )
+
+Enable an e-mail signature.
+
+B<Example>
+
+  $google->enableSignature(
+      username  => 'jsmith',
+      signature => 'Joey Smith - (+1) 555-555-5555'
+  )
+  || die "Could not enable signature";
+
+=item disableSignature ( USERNAME )
+
+Disable a signature.
+
+B<Example>
+
+  $google->disableSignature( username => 'jsmith' );
 
 =back
 
