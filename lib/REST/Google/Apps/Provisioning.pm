@@ -89,6 +89,7 @@ sub createUser {
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
     $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" suspended="false" />\n);
     $body .= qq(  <apps:login hashFunctionName="$arg->{'passwordHashFunction'}" />\n) if $arg->{'passwordHashFunction'}; 
+    $body .= qq(  <apps:login admin="$arg->{'admin'} />\n) if $arg->{'admin'}; 
     $body .= qq(  <apps:quota limit="$arg->{'quotaLimitInMB'}" />\n) if $arg->{'quotaLimitInMB'}; 
     $body .= qq(  <apps:name familyName="$arg->{'familyName'}" givenName="$arg->{'givenName'}" />\n);
     $body .= $self->_xmlpost();
@@ -222,6 +223,10 @@ sub updateUser {
 
     if ( $arg->{'suspended'} ) {
         $body .= qq(  <apps:login userName="$arg->{'username'}" suspended="$arg->{'suspended'}" />\n);
+    }
+
+    if ( $arg->{'admin'} ) {
+        $body .= qq(  <apps:login userName="$arg->{'username'}" admin="$arg->{'admin'}" />\n);
     }
 
     $body .= $self->_xmlpost();
