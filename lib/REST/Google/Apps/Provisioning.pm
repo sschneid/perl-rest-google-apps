@@ -161,7 +161,34 @@ sub getUser {
     return( $ref );
 }
 
-sub getAllUsers { return shift->getUser(); }
+sub getAllUsers {
+    my $self = shift;
+
+    my ( @url, $result, $ref );
+
+    push @url, qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
+
+    foreach my $u ( @url ) {
+        $result = $self->_request( 'method' => 'GET', 'url' => $u ) || return( 0 );
+
+        foreach my $link ( @{$result->{'link'}} ) {
+            if ( $link->{'rel'} eq 'next' ) {
+                push @url, $link->{'href'};
+            }
+        }
+
+        foreach ( keys %{$result->{'entry'}} ) {
+            my $username = $1 if /^.*\/(.+)$/;
+            $ref->{$username} = {
+                %{$result->{'entry'}->{$_}->{'apps:name'}},
+                %{$result->{'entry'}->{$_}->{'apps:login'}},
+                %{$result->{'entry'}->{$_}->{'apps:quota'}}
+            };
+        }
+    }
+
+    return( $ref );
+}
 
 sub updateUser {
     my $self = shift;
