@@ -173,7 +173,7 @@ sub updateUser {
         $arg->{$param} || croak( "Missing required '$param' argument" );
     }
 
-    my $user = $self->getUser( $arg->{'username'} );
+    my $user = $self->getUser( username => $arg->{'username'} );
 
     my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$arg->{'username'});
 
