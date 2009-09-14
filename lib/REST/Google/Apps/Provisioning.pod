@@ -61,7 +61,7 @@ B<Example>
   )
   || die "Could not authenticate";
 
-=item createUser ( USERNAME, GIVENNAME, FAMILYNAME, PASSWORD )
+=item createUser ( USERNAME, GIVENNAME, FAMILYNAME, PASSWORD, PASSWORDHASHFUNCTION, ADMIN )
 
 B<Example>
 
