@@ -217,6 +217,7 @@ sub updateUser {
 
     if ( $arg->{'password'} ) {
         $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" />\n);
+        $body .= qq(  <apps:login hashFunctionName="$arg->{'passwordHashFunction'}" />\n) if $arg->{'passwordHashFunction'}; 
     }
 
     if ( $arg->{'suspended'} ) {
