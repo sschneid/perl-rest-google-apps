@@ -276,33 +276,27 @@ sub getGroup {
     my ( $arg );
     %{$arg} = @_;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/group/2.0);
+    foreach my $param ( qw/ group / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'});
     $url .= "/$arg->{'group'}" if $arg->{'group'};
 
     my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
     my ( $ref );
 
-    unless ( $arg->{'group'} ) {
-        foreach ( keys %{$result->{'entry'}} ) {
-            $arg->{'group'} = $1 if /^.*\/(.+)$/;
-            $ref->{$arg->{'group'}} = {
-                %{$result->{'entry'}->{$_}->{'apps:name'}},
-                %{$result->{'entry'}->{$_}->{'apps:login'}}
-            }
-        }
+    foreach ( keys %{$result->{'apps:property'}} ) {
+        $ref->{$arg->{'group'}}->{$_} = $result->{'apps:property'}->{$_}->{'value'};
     }
-    else {
-        $ref->{$arg->{'group'}} = {
-            %{$result->{'apps:name'}},
-            %{$result->{'apps:login'}}
-        };
-    }
+
+    $ref->{$arg->{'group'}}->{'updated'} = $result->{'updated'};
 
     return( $ref );
 }
 
-sub getAllGroups { return shift->getGroup(); }
+# sub getAllGroups { return shift->getGroup(); }
 
 
 

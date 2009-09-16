@@ -154,6 +154,22 @@ B<Example>
 
   $user->{'jsmith'} = $google->getUser( username => 'jsmith' );
 
+B<Hash>
+
+Using the above example, the returned hash is:
+
+  'jsmith' => {
+      'admin' => 'false',
+      'ipWhitelisted' => 'false',
+      'suspended' => 'false',
+      'limit' => '7168',
+      'userName' => 'jsmith`',
+      'changePasswordAtNextLogin' => 'false',
+      'givenName' => 'Joseph',
+      'familyName' => 'Smith',
+      'agreedToTerms' => 'false'
+  }
+
 =item getAllUsers
 
 Retrieve a list of all users.
@@ -164,7 +180,23 @@ B<Example>
 
 =item getGroup ( GROUP )
 
-Not yet implemented.
+Retrieve a hash containing group information.
+
+B<Example>
+
+  $group->{'finance'} = $google->getGroup( group => 'finance' );
+
+B<Hash>
+
+Using the above example, the returned hash is:
+
+  'finance' => {
+      'emailPermission' => 'Anyone',
+      'groupId' => 'finance@company.com',
+      'updated' => '2009-09-16T21:05:15.697Z',
+      'groupName' => 'finance',
+      'description' => 'Finance Department'
+  }
 
 =item getAllGroups
 
