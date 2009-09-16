@@ -134,30 +134,21 @@ sub getUser {
     my ( $arg );
     %{$arg} = @_;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0);
-    $url .= "/$arg->{'username'}" if $arg->{'username'};
+    foreach my $param ( qw/ username / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$arg->{'username'});
 
     my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
     my ( $ref );
 
-    unless ( $arg->{'username'} ) {
-        foreach ( keys %{$result->{'entry'}} ) {
-            $arg->{'username'} = $1 if /^.*\/(.+)$/;
-            $ref->{$arg->{'username'}} = {
-                %{$result->{'entry'}->{$_}->{'apps:name'}},
-                %{$result->{'entry'}->{$_}->{'apps:login'}},
-                %{$result->{'entry'}->{$_}->{'apps:quota'}}
-            }
-        }
-    }
-    else {
-        $ref->{$arg->{'username'}} = {
-            %{$result->{'apps:name'}},
-            %{$result->{'apps:login'}},
-            %{$result->{'apps:quota'}}
-        };
-    }
+    $ref->{$arg->{'username'}} = {
+        %{$result->{'apps:name'}},
+        %{$result->{'apps:login'}},
+        %{$result->{'apps:quota'}}
+    };
 
     return( $ref );
 }
@@ -280,8 +271,7 @@ sub getGroup {
         $arg->{$param} || croak( "Missing required '$param' argument" );
     }
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'});
-    $url .= "/$arg->{'group'}" if $arg->{'group'};
+    my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'}/$arg->{'group'});
 
     my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
@@ -358,8 +348,11 @@ sub getNickname {
     my ( $arg );
     %{$arg} = @_;
 
-    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0);
-    $url .= "/$arg->{'nickname'}" if $arg->{'nickname'};
+    foreach my $param ( qw/ nickname / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0/$arg->{'nickname'});
 
     my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
 
