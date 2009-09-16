@@ -191,6 +191,34 @@ sub getAllUsers {
     return( $ref );
 }
 
+sub renameUser {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ username newname / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/user/2.0/$arg->{'username'});
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
+    $body .= qq(  <apps:login userName="$arg->{'newname'}" />\n);
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'PUT',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    return( 1 );
+}
+
 sub updateUser {
     my $self = shift;
 

@@ -79,6 +79,16 @@ B<Example>
 
   delete $user->{'jsmith'} if $google->deleteUser( username => 'jsmith' );
 
+=item renameUser ( USERNAME, NEWNAME )
+
+B<Example>
+
+  $google->renameUser(
+      username => 'jsmith',
+      newname  => 'josephsmith'
+  )
+  || die "Could not rename user";
+
 =item updateUser ( USER, ATTR )
 
 B<Example>
