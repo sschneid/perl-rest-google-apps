@@ -178,6 +178,18 @@ B<Example>
 
   $users = $google->getAllUsers();
 
+=item createGroup ( GROUP )
+
+Not yet implemented.
+
+=item deleteGroup ( GROUP )
+
+Not yet implemented.
+
+=item updateGroup ( GROUP, ... )
+
+Not yet implemented.
+
 =item getGroup ( GROUP )
 
 Retrieve a hash containing group information.
@@ -199,6 +211,10 @@ Using the above example, the returned hash is:
   }
 
 =item getAllGroups
+
+Not yet implemented.
+
+=item getGroupMembers ( GROUP )
 
 Not yet implemented.
 
@@ -224,7 +240,20 @@ B<Example>
 
 =item getNickname ( NICKNAME )
 
-Not yet implemented.
+Retrieve a nickname.
+
+B<Example>
+
+  $nickname->{'frank'} = $google->getNickname( nickname => 'frnak' );
+
+B<Hash>
+
+Using the above example, the returned hash is:
+
+  'frank' => {
+      'name' => 'frank',
+      'userName' => 'jsmith'
+  }
 
 =item getAllNicknames
 
