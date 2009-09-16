@@ -261,6 +261,43 @@ sub updateUser {
 
 
 
+sub createGroup {
+    my $self  = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ group / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'});
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#group" />\n);
+    $body .= qq(  <apps:property name="groupId" value="$arg->{'group'}\@$self->{'domain'}" />\n);
+    $body .= qq(  <apps:property name="groupName" value="$arg->{'group'}" />\n);
+    $body .= $self->_xmlpost();
+
+    my $result = $self->_request(
+        'method' => 'POST',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    my ( $ref );
+
+    foreach ( keys %{$result->{'apps:property'}} ) {
+        $ref->{$arg->{'group'}}->{$_} = $result->{'apps:property'}->{$_}->{'value'};
+    }
+
+    $ref->{$arg->{'group'}}->{'updated'} = $result->{'updated'};
+
+    return( $ref );
+}
+
 sub getGroup {
     my $self  = shift;
 

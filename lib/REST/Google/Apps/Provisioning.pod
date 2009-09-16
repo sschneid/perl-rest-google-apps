@@ -180,7 +180,14 @@ B<Example>
 
 =item createGroup ( GROUP )
 
-Not yet implemented.
+Create a new group.
+
+B<Example>
+
+  $google->createGroup(
+      group => 'finance'
+  )
+  || die "Could not create group";
 
 =item deleteGroup ( GROUP )
 
