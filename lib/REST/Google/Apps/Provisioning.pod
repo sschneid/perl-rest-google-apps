@@ -63,6 +63,46 @@ B<Example>
 
 =item createUser ( USERNAME, GIVENNAME, FAMILYNAME, PASSWORD, PASSWORDHASHFUNCTION, ADMIN )
 
+Create a new user.
+
+The following parameters are required:
+
+=over 4
+
+=item username
+
+The username associated with the account being created.
+
+=item givenName
+
+The user's given (first) name.
+
+=item familyName
+
+The user's family (last) name.
+
+=item password
+
+The user's password.
+
+=back
+
+The following paramaters are optional:
+
+=over 4
+
+=item passwordHashFunction
+
+The format of the value in the B<password> attribute.  Currently, the only
+valid values for this parameter are "SHA-1" and "MD5".
+
+=item admin
+
+Can be 'true' or 'false', representing whether or not the user should be
+granted administrator access.
+
+=back
+
 B<Example>
 
   $user->{'jsmith'} = $google->createUser(
@@ -73,13 +113,17 @@ B<Example>
   )
   || die "Could not create user";
 
-=item deleteUser ( USER )
+=item deleteUser ( USERNAME )
+
+Delete a user.
 
 B<Example>
 
   delete $user->{'jsmith'} if $google->deleteUser( username => 'jsmith' );
 
 =item renameUser ( USERNAME, NEWNAME )
+
+Rename a user.
 
 B<Example>
 
@@ -89,7 +133,10 @@ B<Example>
   )
   || die "Could not rename user";
 
-=item updateUser ( USER, ATTR )
+=item updateUser ( USERNAME, ATTR )
+
+Update a user's attributes.  See the B<createUser> function for a list of
+valid attributes.
 
 B<Example>
 
@@ -101,20 +148,31 @@ B<Example>
 
 =item getUser ( USER )
 
+Retrieve a hash containing a user's account information.
+
 B<Example>
 
   $user->{'jsmith'} = $google->getUser( username => 'jsmith' );
 
 =item getAllUsers
 
-Retrieve a list of all users.  This can also be accomplished by calling the
-B<getUser> method with no arguments.
+Retrieve a list of all users.
+
+B<Example>
+
+  $users = $google->getAllUsers();
 
 =item getGroup ( GROUP )
 
+Not yet implemented.
+
 =item getAllGroups
 
+Not yet implemented.
+
 =item createNickname ( USERNAME, NICKNAME )
+
+Create a nickname (e-mail alias).
 
 B<Example>
 
@@ -126,16 +184,19 @@ B<Example>
 
 =item deleteNickname ( NICKNAME )
 
+Delete a nickname (e-mail alias).
+
 B<Example>
 
   $google->deleteNickname( nickname => 'joe' );
 
 =item getNickname ( NICKNAME )
 
+Not yet implemented.
+
 =item getAllNicknames
 
-Retrieve a list of all nicknames.  This can also be accomplished by calling the
-B<getNickname> method with no arguments.
+Retrieve a list of all nicknames.
 
 =back
 
