@@ -380,6 +380,13 @@ sub addGroupMember {
         $arg->{$param} || croak( "Missing required '$param' argument" );
     }
 
+    if ( $arg->{'owner'} && $arg->{'owner'} eq 'true' ) {
+        return $self->addGroupOwner(
+            group => $arg->{'group'},
+            owner => $arg->{'member'}
+        );
+    }
+
     my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'}/$arg->{'group'}/member);
 
     my ( $body );
@@ -468,6 +475,37 @@ sub getGroupMembers {
 
 sub addGroupOwner {
     # Not yet implemented
+
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ group owner / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'}/$arg->{'group'}/owner);
+
+    my ( $body );
+
+    $body  = $self->_xmlpre();
+    $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#group" />\n);
+    $body .= qq(  <apps:property name="groupId" value="$arg->{'group'}\@$self->{'domain'}" />\n);
+    $body .= qq(  <apps:property name="email" value="$arg->{'owner'}\@$self->{'domain'}" />\n);
+    $body .= $self->_xmlpost();
+
+    print "url:$url\nbody:\n$body\n";
+
+    my $result = $self->_request(
+        'method' => 'POST',
+        'url'    => $url,
+        'body'   => $body
+    ) || return( 0 );
+
+    # This returns true, but is actually still broken
+
+    return( 1 );
 }
 
 sub deleteGroupOwner {
@@ -479,7 +517,49 @@ sub getGroupOwner {
 }
 
 sub getGroupOwners {
-    # Not yet implemented
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ group / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my ( @url, $result, $ref );
+
+    push @url, qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'}/$arg->{'group'}/owner);
+
+    foreach my $u ( @url ) {
+        $result = $self->_request( 'method' => 'GET', 'url' => $u ) || return( 0 );
+
+        foreach my $link ( @{$result->{'link'}} ) {
+            if ( $link->{'rel'} eq 'next' ) {
+                push @url, $link->{'href'};
+            }
+        }
+
+        if ( $result->{'entry'}->{'apps:property'} ) {
+            my $owner = $result->{'entry'}->{'apps:property'}->{'email'}->{'value'};
+            $owner =~ s/^(.*)\@.*$/$1/g;
+
+            foreach ( keys %{$result->{'entry'}->{'apps:property'}} ) {
+                $ref->{$owner}->{$_} = $result->{'entry'}->{'apps:property'}->{$_}->{'value'};
+            }
+        }
+        else {
+            foreach my $e ( keys %{$result->{'entry'}} ) {
+                my $owner = $result->{'entry'}->{$e}->{'apps:property'}->{'email'}->{'value'};
+                $owner =~ s/^(.*)\@.*$/$1/g;
+
+                foreach ( keys %{$result->{'entry'}->{$e}->{'apps:property'}} ) {
+                    $ref->{$owner}->{$_} = $result->{'entry'}->{$e}->{'apps:property'}->{$_}->{'value'};
+                }
+            }
+        }
+    }
+
+    return( $ref );
 }
 
 
