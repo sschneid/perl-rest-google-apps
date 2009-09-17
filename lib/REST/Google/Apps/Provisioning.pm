@@ -443,12 +443,22 @@ sub getGroupMembers {
             }
         }
 
-        foreach my $e ( keys %{$result->{'entry'}} ) {
-            my $member = $result->{'entry'}->{$e}->{'apps:property'}->{'memberId'}->{'value'};
+        if ( $result->{'entry'}->{'apps:property'} ) {
+            my $member = $result->{'entry'}->{'apps:property'}->{'memberId'}->{'value'};
             $member =~ s/^(.*)\@.*$/$1/g;
 
-            foreach ( keys %{$result->{'entry'}->{$e}->{'apps:property'}} ) {
-                $ref->{$member}->{$_} = $result->{'entry'}->{$e}->{'apps:property'}->{$_}->{'value'};
+            foreach ( keys %{$result->{'entry'}->{'apps:property'}} ) {
+                $ref->{$member}->{$_} = $result->{'entry'}->{'apps:property'}->{$_}->{'value'};
+            }
+        }
+        else {
+            foreach my $e ( keys %{$result->{'entry'}} ) {
+                my $member = $result->{'entry'}->{$e}->{'apps:property'}->{'memberId'}->{'value'};
+                $member =~ s/^(.*)\@.*$/$1/g;
+
+                foreach ( keys %{$result->{'entry'}->{$e}->{'apps:property'}} ) {
+                    $ref->{$member}->{$_} = $result->{'entry'}->{$e}->{'apps:property'}->{$_}->{'value'};
+                }
             }
         }
     }
