@@ -353,6 +353,42 @@ sub getAllGroups {
     return( $ref );
 }
 
+sub getGroupMembers {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ group / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my ( @url, $result, $ref );
+
+    push @url, qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'}/$arg->{'group'}/member);
+
+    foreach my $u ( @url ) {
+        $result = $self->_request( 'method' => 'GET', 'url' => $u ) || return( 0 );
+
+        foreach my $link ( @{$result->{'link'}} ) {
+            if ( $link->{'rel'} eq 'next' ) {
+                push @url, $link->{'href'};
+            }
+        }
+
+        foreach my $e ( keys %{$result->{'entry'}} ) {
+            my $member = $result->{'entry'}->{$e}->{'apps:property'}->{'memberId'}->{'value'};
+            $member =~ s/^(.*)\@.*$/$1/g;
+
+            foreach ( keys %{$result->{'entry'}->{$e}->{'apps:property'}} ) {
+                $ref->{$member}->{$_} = $result->{'entry'}->{$e}->{'apps:property'}->{$_}->{'value'};
+            }
+        }
+    }
+
+    return( $ref );
+}
+
 
 
 sub createNickname {

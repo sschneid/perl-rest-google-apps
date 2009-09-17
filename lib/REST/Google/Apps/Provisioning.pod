@@ -227,7 +227,28 @@ B<Example>
 
 =item getGroupMembers ( GROUP )
 
-Not yet implemented.
+Retrieve a list of group members.
+
+B<Example>
+
+  $group->{'finance'}->{'members'} = $google->getGroupMembers( group => 'finance' );
+
+B<Hash>
+
+Using the above example, the returned hash is:
+
+  'members' => {
+      'jsmith' => {
+          'memberType' => 'User',
+          'directMember' => 'true',
+          'memberId' => 'jsmith@company.com'
+      },
+      'sschneid' => {
+          'memberType' => 'User',
+          'directMember' => 'true',
+          'memberId' => 'sschneid@gmail.com'
+      }
+  }
 
 =item createNickname ( USERNAME, NICKNAME )
 
