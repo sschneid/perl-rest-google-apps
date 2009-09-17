@@ -229,6 +229,18 @@ B<Example>
 
   $groups = $google->getAllGroups();
 
+=item addGroupMember ( GROUP, MEMBER )
+
+Add a member to a group.
+
+B<Example>
+
+  $google->addGroupMember(
+      group  => 'finance',
+      member => 'jsmith'
+  )
+  || die "Could not add group member";
+
 =item getGroupMembers ( GROUP )
 
 Retrieve a list of group members.
