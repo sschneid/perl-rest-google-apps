@@ -474,8 +474,6 @@ sub getGroupMembers {
 }
 
 sub addGroupOwner {
-    # Not yet implemented
-
     my $self = shift;
 
     my ( $arg );
@@ -495,15 +493,11 @@ sub addGroupOwner {
     $body .= qq(  <apps:property name="email" value="$arg->{'owner'}\@$self->{'domain'}" />\n);
     $body .= $self->_xmlpost();
 
-    print "url:$url\nbody:\n$body\n";
-
     my $result = $self->_request(
         'method' => 'POST',
         'url'    => $url,
         'body'   => $body
     ) || return( 0 );
-
-    # This returns true, but is actually still broken
 
     return( 1 );
 }
