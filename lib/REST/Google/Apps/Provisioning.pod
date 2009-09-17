@@ -246,7 +246,7 @@ Using the above example, the returned hash is:
       'sschneid' => {
           'memberType' => 'User',
           'directMember' => 'true',
-          'memberId' => 'sschneid@gmail.com'
+          'memberId' => 'sschneid@company.com'
       }
   }
 
