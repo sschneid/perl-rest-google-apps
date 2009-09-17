@@ -241,6 +241,18 @@ B<Example>
   )
   || die "Could not add group member";
 
+=item deleteGroupMember ( GROUP, MEMBER )
+
+Remove a member from a group.
+
+B<Example>
+
+  $google->deleteGroupMember(
+      group  => 'finance',
+      member => 'jsmith'
+  )
+  || die "Could not delete group member";
+
 =item getGroupMembers ( GROUP )
 
 Retrieve a list of group members.

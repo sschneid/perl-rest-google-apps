@@ -400,7 +400,20 @@ sub addGroupMember {
 }
 
 sub deleteGroupMember {
-    # Not yet implemented
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    foreach my $param ( qw/ group member / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'}/$arg->{'group'}/member/$arg->{'member'});
+
+    my $result = $self->_request( 'method' => 'DELETE', 'url' => $url ) || return( 0 );
+
+    return( 1 ) if $result;
 }
 
 sub getGroupMember {
