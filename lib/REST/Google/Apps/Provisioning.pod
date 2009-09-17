@@ -285,14 +285,22 @@ Add an owner to a group.
 B<Example>
 
   $google->addGroupOwner(
-      group  => 'finance',
-      member => 'jsmith'
+      group => 'finance',
+      owner => 'jsmith'
   )
   || die "Could not add group owner";
 
 =item deleteGroupOwner ( GROUP, OWNER )
 
-Not yet implemented.
+Remove an owner from a group.
+
+B<Example>
+
+  $google->deleteGroupOwner(
+      group => 'finance',
+      owner => 'jsmith'
+  )
+  || die "Could not delete group owner";
 
 =item getGroupOwner ( GROUP, OWNER )
 
