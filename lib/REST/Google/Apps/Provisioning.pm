@@ -298,6 +298,10 @@ sub createGroup {
     return( $ref );
 }
 
+sub deleteGroup {
+    # Not yet implemented
+}
+
 sub getGroup {
     my $self  = shift;
 
@@ -353,6 +357,18 @@ sub getAllGroups {
     return( $ref );
 }
 
+sub addGroupMember {
+    # Not yet implemented
+}
+
+sub deleteGroupMember {
+    # Not yet implemented
+}
+
+sub getGroupMember {
+    # Not yet implemented
+}
+
 sub getGroupMembers {
     my $self = shift;
 
@@ -387,6 +403,22 @@ sub getGroupMembers {
     }
 
     return( $ref );
+}
+
+sub addGroupOwner {
+    # Not yet implemented
+}
+
+sub deleteGroupOwner {
+    # Not yet implemented
+}
+
+sub getGroupOwner {
+    # Not yet implemented
+}
+
+sub getGroupOwners {
+    # Not yet implemented
 }
 
 
