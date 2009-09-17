@@ -219,7 +219,11 @@ Using the above example, the returned hash is:
 
 =item getAllGroups
 
-Not yet implemented.
+Retrieve a list of all groups.
+
+B<Example>
+
+  $groups = $google->getAllGroups();
 
 =item getGroupMembers ( GROUP )
 

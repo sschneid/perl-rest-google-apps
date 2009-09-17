@@ -323,7 +323,35 @@ sub getGroup {
     return( $ref );
 }
 
-# sub getAllGroups { return shift->getGroup(); }
+sub getAllGroups {
+    my $self  = shift;
+
+    my ( @url, $result, $ref );
+
+    push @url, qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'});
+
+    foreach my $u ( @url ) {
+        $result = $self->_request( 'method' => 'GET', 'url' => $u ) || return( 0 );
+
+        foreach my $link ( @{$result->{'link'}} ) {
+            if ( $link->{'rel'} eq 'next' ) {
+                push @url, $link->{'href'};
+            }
+        }
+
+        foreach my $e ( keys %{$result->{'entry'}} ) {
+            my $group = $result->{'entry'}->{$e}->{'apps:property'}->{'groupName'}->{'value'};
+
+            foreach ( keys %{$result->{'entry'}->{$e}->{'apps:property'}} ) {
+                $ref->{$group}->{$_} = $result->{'entry'}->{$e}->{'apps:property'}->{$_}->{'value'};
+            }
+
+            $ref->{$group}->{'updated'} = $result->{'entry'}->{$e}->{'updated'};
+        }
+    }
+
+    return( $ref );
+}
 
 
 
