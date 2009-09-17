@@ -191,7 +191,11 @@ B<Example>
 
 =item deleteGroup ( GROUP )
 
-Not yet implemented.
+Delete a group.
+
+B<Example>
+
+  delete $group->{'finance'} if $google->deleteGroup( group => 'finance' );
 
 =item updateGroup ( GROUP, ... )
 
