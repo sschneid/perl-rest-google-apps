@@ -87,8 +87,13 @@ sub createUser {
 
     $body  = $self->_xmlpre();
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
-    $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" suspended="false" />\n);
-    $body .= qq(  <apps:login hashFunctionName="$arg->{'passwordHashFunction'}" />\n) if $arg->{'passwordHashFunction'}; 
+    $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" suspended="false");
+    if ( $arg->{'passwordHashFunction'}) { 
+        $body .= qq( hashFunctionName="$arg->{'passwordHashFunction'}" />\n); 
+    }
+    else {
+        $body .= qq( />\n);
+    }
     $body .= qq(  <apps:login admin="$arg->{'admin'} />\n) if $arg->{'admin'}; 
     $body .= qq(  <apps:quota limit="$arg->{'quotaLimitInMB'}" />\n) if $arg->{'quotaLimitInMB'}; 
     $body .= qq(  <apps:name familyName="$arg->{'familyName'}" givenName="$arg->{'givenName'}" />\n);
@@ -236,8 +241,13 @@ sub updateUser {
     }
 
     if ( $arg->{'password'} ) {
-        $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" />\n);
-        $body .= qq(  <apps:login hashFunctionName="$arg->{'passwordHashFunction'}" />\n) if $arg->{'passwordHashFunction'}; 
+        $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}");
+        if ( $arg->{'passwordHashFunction'} ) {
+            $body .= qq( hashFunctionName="$arg->{'passwordHashFunction'}" />\n); 
+        }
+        else {
+            $body .= qq( />\n);
+        }
     }
 
     if ( $arg->{'suspended'} ) {
