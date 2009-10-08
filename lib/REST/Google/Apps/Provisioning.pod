@@ -25,9 +25,7 @@ bug fixes, comments and complaints.
 
 =head1 CONSTRUCTOR
 
-=over 4
-
-=item new ( DOMAIN, USERNAME, PASSWORD )
+=head2 new ( DOMAIN, USERNAME, PASSWORD )
 
 Creates a new B<REST::Google::Apps::Provisioning> object.  A domain parameter
 is required.
@@ -43,13 +41,9 @@ B<Example>
       password => 'g00gl34pp5!'
   );
 
-=back
-
 =head1 METHODS
 
-=over 4
-
-=item authenticate ( USERNAME, PASSWORD )
+=head2 authenticate ( USERNAME, PASSWORD )
 
 Authenticate a session.
 
@@ -61,7 +55,7 @@ B<Example>
   )
   || die "Could not authenticate";
 
-=item createUser ( USERNAME, GIVENNAME, FAMILYNAME, PASSWORD, PASSWORDHASHFUNCTION, ADMIN )
+=head2 createUser ( USERNAME, GIVENNAME, FAMILYNAME, PASSWORD, PASSWORDHASHFUNCTION, ADMIN )
 
 Create a new user.
 
@@ -113,7 +107,7 @@ B<Example>
   )
   || die "Could not create user";
 
-=item deleteUser ( USERNAME )
+=head2 deleteUser ( USERNAME )
 
 Delete a user.
 
@@ -121,7 +115,7 @@ B<Example>
 
   delete $user->{'jsmith'} if $google->deleteUser( username => 'jsmith' );
 
-=item renameUser ( USERNAME, NEWNAME )
+=head2 renameUser ( USERNAME, NEWNAME )
 
 Rename a user.
 
@@ -133,7 +127,7 @@ B<Example>
   )
   || die "Could not rename user";
 
-=item updateUser ( USERNAME, ATTR )
+=head2 updateUser ( USERNAME, ATTR )
 
 Update a user's attributes.  See the B<createUser> function for a list of
 valid attributes.
@@ -146,7 +140,7 @@ B<Example>
   )
   || die "Could not update user";
 
-=item getUser ( USER )
+=head2 getUser ( USER )
 
 Retrieve a hash containing a user's account information.
 
@@ -170,7 +164,7 @@ Using the above example, the returned hash is:
       'agreedToTerms' => 'false'
   }
 
-=item getAllUsers
+=head2 getAllUsers
 
 Retrieve a list of all users.
 
@@ -178,7 +172,7 @@ B<Example>
 
   $users = $google->getAllUsers();
 
-=item createGroup ( GROUP )
+=head2 createGroup ( GROUP )
 
 Create a new group.
 
@@ -189,7 +183,7 @@ B<Example>
   )
   || die "Could not create group";
 
-=item deleteGroup ( GROUP )
+=head2 deleteGroup ( GROUP )
 
 Delete a group.
 
@@ -197,11 +191,11 @@ B<Example>
 
   delete $group->{'finance'} if $google->deleteGroup( group => 'finance' );
 
-=item updateGroup ( GROUP, ... )
+=head2 updateGroup ( GROUP, ... )
 
 Not yet implemented.
 
-=item getGroup ( GROUP )
+=head2 getGroup ( GROUP )
 
 Retrieve a hash containing group information.
 
@@ -221,7 +215,7 @@ Using the above example, the returned hash is:
       'description' => 'Finance Department'
   }
 
-=item getAllGroups
+=head2 getAllGroups
 
 Retrieve a list of all groups.
 
@@ -229,7 +223,7 @@ B<Example>
 
   $groups = $google->getAllGroups();
 
-=item addGroupMember ( GROUP, MEMBER )
+=head2 addGroupMember ( GROUP, MEMBER )
 
 Add a member to a group.
 
@@ -241,7 +235,7 @@ B<Example>
   )
   || die "Could not add group member";
 
-=item deleteGroupMember ( GROUP, MEMBER )
+=head2 deleteGroupMember ( GROUP, MEMBER )
 
 Remove a member from a group.
 
@@ -253,7 +247,7 @@ B<Example>
   )
   || die "Could not delete group member";
 
-=item getGroupMembers ( GROUP )
+=head2 getGroupMembers ( GROUP )
 
 Retrieve a list of group members.
 
@@ -278,7 +272,7 @@ Using the above example, the returned hash is:
       }
   }
 
-=item addGroupOwner ( GROUP, OWNER )
+=head2 addGroupOwner ( GROUP, OWNER )
 
 Add an owner to a group.
 
@@ -290,7 +284,7 @@ B<Example>
   )
   || die "Could not add group owner";
 
-=item deleteGroupOwner ( GROUP, OWNER )
+=head2 deleteGroupOwner ( GROUP, OWNER )
 
 Remove an owner from a group.
 
@@ -302,11 +296,11 @@ B<Example>
   )
   || die "Could not delete group owner";
 
-=item getGroupOwner ( GROUP, OWNER )
+=head2 getGroupOwner ( GROUP, OWNER )
 
 Not yet implemented.
 
-=item getGroupOwners ( GROUP )
+=head2 getGroupOwners ( GROUP )
 
 Retrieve a list of group owners.
 
@@ -329,7 +323,7 @@ Using the above example, the returned hash is:
       }
   }
 
-=item createNickname ( USERNAME, NICKNAME )
+=head2 createNickname ( USERNAME, NICKNAME )
 
 Create a nickname (e-mail alias).
 
@@ -341,7 +335,7 @@ B<Example>
   )
   || die "Could not create nickname";
 
-=item deleteNickname ( NICKNAME )
+=head2 deleteNickname ( NICKNAME )
 
 Delete a nickname (e-mail alias).
 
@@ -349,7 +343,7 @@ B<Example>
 
   $google->deleteNickname( nickname => 'joe' );
 
-=item getNickname ( NICKNAME )
+=head2 getNickname ( NICKNAME )
 
 Retrieve a nickname.
 
@@ -366,11 +360,9 @@ Using the above example, the returned hash is:
       'userName' => 'jsmith'
   }
 
-=item getAllNicknames
+=head2 getAllNicknames
 
 Retrieve a list of all nicknames.
-
-=back
 
 =head1 AUTHOR
 

@@ -28,9 +28,7 @@ bug fixes, comments and complaints.
 
 =head1 CONSTRUCTOR
 
-=over 4
-
-=item new ( DOMAIN, USERNAME, PASSWORD )
+=head2 new ( DOMAIN, USERNAME, PASSWORD )
 
 Creates a new B<REST::Google::Apps::EmailSettings> object.  A domain parameter
 is required.
@@ -46,13 +44,9 @@ B<Example>
       password => 'g00gl34pp5!'
   );
 
-=back
-
 =head1 METHODS
 
-=over 4
-
-=item authenticate ( USERNAME, PASSWORD )
+=head2 authenticate ( USERNAME, PASSWORD )
 
 Authenticate a session.
 
@@ -64,7 +58,7 @@ B<Example>
   )
   || die "Could not authenticate";
 
-=item createLabel ( USERNAME, LABEL )
+=head2 createLabel ( USERNAME, LABEL )
 
 Create a new label.
 
@@ -76,7 +70,7 @@ B<Example>
   )
   || die "Could not create label";
 
-=item createFilter ( USERNAME, CRITERIA, ACTION )
+=head2 createFilter ( USERNAME, CRITERIA, ACTION )
 
 Create a new filter.
 
@@ -185,7 +179,7 @@ B<Examples>
   )
   || die "Could not create filter";
 
-=item createSendAs ( USERNAME, NAME, ADDRESS, REPLYTO, DEFAULT )
+=head2 createSendAs ( USERNAME, NAME, ADDRESS, REPLYTO, DEFAULT )
 
 Create a send-as alias.
 
@@ -242,9 +236,9 @@ B<Example>
   )
   || die "Could not create send-as alias";
 
-=item enableWebClips ( USERNAME )
+=head2 enableWebClips ( USERNAME )
 
-=item disableWebClips ( USERNAME )
+=head2 disableWebClips ( USERNAME )
 
 Enable or disable web clips.
 
@@ -252,7 +246,7 @@ B<Example>
 
   $google->enableWebClips( username => 'jsmith' );
 
-=item enableForwarding ( USERNAME, FORWARDTO, ACTION )
+=head2 enableForwarding ( USERNAME, FORWARDTO, ACTION )
 
 Enable forwarding.
 
@@ -269,7 +263,7 @@ B<Example>
   )
   || die "Could not enable forwarding";
 
-=item disableForwarding ( USERNAME )
+=head2 disableForwarding ( USERNAME )
 
 Disable forwarding.
 
@@ -277,7 +271,7 @@ B<Example>
 
   $google->disableForwarding( username => 'jsmith' );
 
-=item enablePOP ( USERNAME, ENABLEFOR, ACTION )
+=head2 enablePOP ( USERNAME, ENABLEFOR, ACTION )
 
 Enable POP access.
 
@@ -305,7 +299,7 @@ B<Example>
   )
   || die "Could not enable POP";
 
-=item disablePOP ( USERNAME )
+=head2 disablePOP ( USERNAME )
 
 Disable POP access.
 
@@ -313,9 +307,9 @@ B<Example>
 
   $google->disablePOP( username => 'jsmith' );
 
-=item enableIMAP ( USERNAME )
+=head2 enableIMAP ( USERNAME )
 
-=item disableIMAP ( USERNAME )
+=head2 disableIMAP ( USERNAME )
 
 Enable or disable IMAP access.
 
@@ -323,7 +317,7 @@ B<Example>
 
   $google->enableIMAP( username => 'jsmith' );
 
-=item enableVacation ( USERNAME, SUBJECT, MESSAGE, CONTACTSONLY )
+=head2 enableVacation ( USERNAME, SUBJECT, MESSAGE, CONTACTSONLY )
 
 Enable a vacation/out-of-office auto-responder.
 
@@ -362,7 +356,7 @@ B<Example>
   )
   || die "Could not enable vacation auto-responder";
 
-=item disableVacation ( USERNAME )
+=head2 disableVacation ( USERNAME )
 
 Disable a vacation auto-responder.
 
@@ -370,7 +364,7 @@ B<Example>
 
   $google->disableVacation( username => 'jsmith' );
 
-=item enableSignature ( USERNAME, SIGNATURE )
+=head2 enableSignature ( USERNAME, SIGNATURE )
 
 Enable an e-mail signature.
 
@@ -382,7 +376,7 @@ B<Example>
   )
   || die "Could not enable signature";
 
-=item disableSignature ( USERNAME )
+=head2 disableSignature ( USERNAME )
 
 Disable a signature.
 
@@ -390,7 +384,7 @@ B<Example>
 
   $google->disableSignature( username => 'jsmith' );
 
-=item setLanguage ( USERNAME, LANGUAGE )
+=head2 setLanguage ( USERNAME, LANGUAGE )
 
 Updating the display language setting.
 
@@ -401,7 +395,7 @@ B<Example>
       language => 'de'
   );
 
-=item setPageSize ( USERNAME, PAGESIZE )
+=head2 setPageSize ( USERNAME, PAGESIZE )
 
 Set the number of conversations to be shown per page.
 
@@ -412,9 +406,9 @@ B<Example>
       pageSize => '50'
   );
 
-=item enableShortcuts ( USERNAME )
+=head2 enableShortcuts ( USERNAME )
 
-=item disableShortcuts ( USERNAME )
+=head2 disableShortcuts ( USERNAME )
 
 Enable or disable keyboard shortcuts.
 
@@ -422,9 +416,9 @@ B<Example>
 
   $google->enableShortcuts( username => 'jsmith' );
 
-=item enableArrows ( USERNAME )
+=head2 enableArrows ( USERNAME )
 
-=item disableArrows ( USERNAME )
+=head2 disableArrows ( USERNAME )
 
 Enable or disable arrow-shaped personal indicators ( › and » ) next to
 emails that were sent specifically to the user.
@@ -433,17 +427,15 @@ B<Example>
 
   $google->enableArrows( username => 'jsmith' );
 
-=item enableSnippets ( USERNAME )
+=head2 enableSnippets ( USERNAME )
 
-=item disableSnippets ( USERNAME )
+=head2 disableSnippets ( USERNAME )
 
 Enable or disable snippets of messages in the inbox and when searching.
 
 B<Example>
 
   $google->enableSnippets( username => 'jsmith' );
-
-=back
 
 =head1 AUTHOR
 
