@@ -718,7 +718,26 @@ sub getNickname {
     return( $ref );
 }
 
-sub getAllNicknames { return shift->getNickname(); }
+sub getAllNicknames {
+    my $self = shift;
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0/);
+
+    my $result = $self->_request( 'method' => 'GET', 'url' => $url )
+    || return( 0 );
+
+    my ( $ref, $nickname );
+
+    foreach ( keys %{$result->{'entry'}} ) {
+        $nickname = $1 if /^.*\/(.+)$/;
+        $ref->{$nickname} = {
+            %{$result->{'entry'}->{$_}->{'apps:login'}},
+            %{$result->{'entry'}->{$_}->{'apps:nickname'}}
+        }
+    }
+
+    return( $ref );
+}
 
 
 
