@@ -718,6 +718,36 @@ sub getNickname {
     return( $ref );
 }
 
+sub getUserNicknames {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    map { $arg->{lc($_)} = $arg->{$_} } keys %{$arg};
+
+    foreach my $param ( qw/ username / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/$self->{'domain'}/nickname/2.0?username=$arg->{'username'});
+
+    my $result = $self->_request( 'method' => 'GET', 'url' => $url )
+    || return( 0 );
+
+    my ( $ref, $nickname );
+
+    foreach ( keys %{$result->{'entry'}} ) {
+        $nickname = $1 if /^.*\/(.+)$/;
+        $ref->{$nickname} = {
+            %{$result->{'entry'}->{$_}->{'apps:login'}},
+            %{$result->{'entry'}->{$_}->{'apps:nickname'}}
+        }
+    }
+
+    return( $ref );
+}
+
 sub getAllNicknames {
     my $self = shift;
 
