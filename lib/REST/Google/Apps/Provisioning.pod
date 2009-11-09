@@ -349,7 +349,7 @@ Retrieve a nickname.
 
 B<Example>
 
-  $nickname->{'frank'} = $google->getNickname( nickname => 'frnak' );
+  $nickname->{'frank'} = $google->getNickname( nickname => 'frank' );
 
 B<Hash>
 
@@ -359,6 +359,14 @@ Using the above example, the returned hash is:
       'name' => 'frank',
       'userName' => 'jsmith'
   }
+
+=head2 getUserNicknames ( USERNAME )
+
+Retrieve a list of a user's nicknames.
+
+B<Example>
+
+  $user->{'jsmith'}->{'nicknames'} = $google->getUserNicknames( username => 'jsmith' );
 
 =head2 getAllNicknames
 
