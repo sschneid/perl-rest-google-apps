@@ -332,6 +332,15 @@ sub createGroup {
     $body .= qq(  <apps:property name="groupId" value="$arg->{'group'}\@$self->{'domain'}" />\n);
     $body .= qq(  <apps:property name="groupName" value="$arg->{'group'}" />\n);
 
+    if ( $arg->{'description'} ) {
+        $body .= qq( <apps:property name="description" value="$arg->{'description'}"></apps:property> \n);
+    }
+
+    if ( $arg->{'permission'} ) {
+        $arg->{'permission'} = ucfirst( lc( $arg->{'permission'} ) );
+        $body .= qq( <apps:property name="emailPermission" value="$arg->{'permission'}"></apps:property> \n);
+    }
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(

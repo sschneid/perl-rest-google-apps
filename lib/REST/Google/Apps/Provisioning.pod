@@ -172,14 +172,59 @@ B<Example>
 
   $users = $google->getAllUsers();
 
-=head2 createGroup ( GROUP )
+=head2 createGroup ( GROUP, DESCRIPTION, PERMISSION )
 
 Create a new group.
+
+The following paramteres are required:
+
+=over 4
+
+=item group
+
+The group name.
+
+=back
+
+The following parameters are optional:
+
+=over 4
+
+=item description
+
+A longer description of the group.
+
+=item permission
+
+The permission level of the group.  Valid values are:
+
+=over 4
+
+=item owner
+
+Owners of the group.
+
+=item member
+
+Members of the group.
+
+=item domain
+
+Any user who belongs to the same domain as the group.
+
+=item anyone
+
+Any user.
+
+=back
+
+=back
 
 B<Example>
 
   $google->createGroup(
-      group => 'finance'
+      group => 'finance',
+      description => 'Finance Department'
   )
   || die "Could not create group";
 
