@@ -7,7 +7,7 @@ use XML::Simple;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.7';
+our $VERSION = '1.1.8-dev';
 
 
 
@@ -97,7 +97,10 @@ sub createUser {
     if ( $arg->{'passwordhashfunction'}) { 
         $arg->{'passwordhashfunction'} = uc( $arg->{'passwordhashfunction'} );
 
-        unless ( $arg->{'passwordhashfunction'} eq ( 'SHA-1' || 'MD5' ) ) {
+        unless (
+            ( $arg->{'passwordhashfunction'} eq 'SHA-1' ) ||
+            ( $arg->{'passwordhashfunction'} eq 'MD5' )
+        ) {
             croak( "Valid passwordHashFunction values are 'MD5' or 'SHA-1'" );
         }
 
@@ -265,7 +268,10 @@ sub updateUser {
         if ( $arg->{'passwordhashfunction'} ) {
             $arg->{'passwordhashfunction'} = uc( $arg->{'passwordhashfunction'} );
         
-            unless ( $arg->{'passwordhashfunction'} eq ( 'SHA-1' || 'MD5' ) ) { 
+            unless (
+                ( $arg->{'passwordhashfunction'} eq 'SHA-1' ) || 
+                ( $arg->{'passwordhashfunction'} eq 'MD5' )
+            ) { 
                 croak( "Valid passwordHashFunction values are 'MD5' or 'SHA-1'" );
             }
 
