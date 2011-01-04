@@ -181,7 +181,7 @@ sub createSendAs {
     $body .= qq(  <apps:property name="name" value="$arg->{'name'}" />\n);
     $body .= qq(  <apps:property name="address" value="$arg->{'address'}" />\n);
     $body .= qq(  <apps:property name="replyTo" value="$arg->{'replyto'}" />\n) if $arg->{'replyto'};
-    $body .= qq(  <apps:property name="default" value="$arg->{'default'}" />\n) if $arg->{'default'};
+    $body .= qq(  <apps:property name="makeDefault" value="$arg->{'default'}" />\n) if $arg->{'default'};
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
