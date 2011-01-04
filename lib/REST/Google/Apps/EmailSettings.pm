@@ -92,7 +92,9 @@ sub createLabel {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="label" value="$arg->{'label'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -178,10 +180,12 @@ sub createSendAs {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="name" value="$arg->{'name'}" />\n);
     $body .= qq(  <apps:property name="address" value="$arg->{'address'}" />\n);
     $body .= qq(  <apps:property name="replyTo" value="$arg->{'replyto'}" />\n) if $arg->{'replyto'};
     $body .= qq(  <apps:property name="makeDefault" value="$arg->{'default'}" />\n) if $arg->{'default'};
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -212,7 +216,9 @@ sub enableWebClips {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="enable" value="true" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -241,7 +247,9 @@ sub disableWebClips {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="enable" value="false" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -313,7 +321,9 @@ sub disableForwarding {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="enable" value="false" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -395,7 +405,9 @@ sub disablePOP {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="enable" value="false" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -425,7 +437,9 @@ sub enableIMAP {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="enable" value="true" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -454,7 +468,9 @@ sub disableIMAP {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="enable" value="false" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -485,10 +501,12 @@ sub enableVacation {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="enable" value="true" />\n);
     $body .= qq(  <apps:property name="subject" value="$arg->{'subject'}" />\n);
     $body .= qq(  <apps:property name="message" value="$arg->{'message'}" />\n);
     $body .= qq(  <apps:property name="contactsOnly" value="$arg->{'contactsonly'}" />\n) if $arg->{'contactsonly'};
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -517,7 +535,9 @@ sub disableVacation {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="enable" value="false" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -548,7 +568,9 @@ sub enableSignature {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="signature" value="$arg->{'signature'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -577,7 +599,9 @@ sub disableSignature {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="signature" value="" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -608,7 +632,9 @@ sub setLanguage {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="language" value="$arg->{'language'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -639,7 +665,9 @@ sub setPageSize {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="pageSize" value="$arg->{'pagesize'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -670,7 +698,9 @@ sub enableShortcuts {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="shortcuts" value="true" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -699,7 +729,9 @@ sub disableShortcuts {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="shortcuts" value="false" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -730,7 +762,9 @@ sub enableArrows {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="arrows" value="true" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -759,7 +793,9 @@ sub disableArrows {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="arrows" value="false" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -790,7 +826,9 @@ sub enableSnippets {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="snippets" value="true" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -819,7 +857,9 @@ sub disableSnippets {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <apps:property name="snippets" value="false" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(

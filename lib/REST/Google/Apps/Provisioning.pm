@@ -92,8 +92,10 @@ sub createUser {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
     $body .= qq(  <apps:login userName="$arg->{'username'}" password="$arg->{'password'}" suspended="false");
+
     if ( $arg->{'passwordhashfunction'}) { 
         $arg->{'passwordhashfunction'} = uc( $arg->{'passwordhashfunction'} );
 
@@ -109,9 +111,11 @@ sub createUser {
     else {
         $body .= qq( />\n);
     }
+
     $body .= qq(  <apps:login admin="$arg->{'admin'} />\n) if $arg->{'admin'}; 
     $body .= qq(  <apps:quota limit="$arg->{'quotalimitinmb'}" />\n) if $arg->{'quotalimitinmb'}; 
     $body .= qq(  <apps:name familyName="$arg->{'familyname'}" givenName="$arg->{'givenname'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -223,8 +227,10 @@ sub renameUser {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
     $body .= qq(  <apps:login userName="$arg->{'newname'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -255,6 +261,7 @@ sub updateUser {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#user" />\n);
 
     if ( $arg->{'givenname'} || $arg->{'familyname'} ) {
@@ -320,9 +327,11 @@ sub createGroup {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#group" />\n);
     $body .= qq(  <apps:property name="groupId" value="$arg->{'group'}\@$self->{'domain'}" />\n);
     $body .= qq(  <apps:property name="groupName" value="$arg->{'group'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -442,9 +451,11 @@ sub addGroupMember {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#group" />\n);
     $body .= qq(  <apps:property name="groupId" value="$arg->{'group'}\@$self->{'domain'}" />\n);
     $body .= qq(  <apps:property name="memberId" value="$arg->{'member'}\@$self->{'domain'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -544,9 +555,11 @@ sub addGroupOwner {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#group" />\n);
     $body .= qq(  <apps:property name="groupId" value="$arg->{'group'}\@$self->{'domain'}" />\n);
     $body .= qq(  <apps:property name="email" value="$arg->{'owner'}\@$self->{'domain'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
@@ -648,9 +661,11 @@ sub createNickname {
     my ( $body );
 
     $body  = $self->_xmlpre();
+
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#nickname" />\n);
     $body .= qq(  <apps:login userName="$arg->{'username'}" />\n);
     $body .= qq(  <apps:nickname name="$arg->{'nickname'}" />\n);
+
     $body .= $self->_xmlpost();
 
     my $result = $self->_request(
