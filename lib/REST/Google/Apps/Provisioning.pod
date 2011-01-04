@@ -78,7 +78,7 @@ The user's password.
 
 =back
 
-The following paramaters are optional:
+The following parameters are optional:
 
 =over 4
 
@@ -173,7 +173,7 @@ B<Example>
 
 Create a new group.
 
-The following paramteres are required:
+The following parameters are required:
 
 =over 4
 
