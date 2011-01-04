@@ -20,9 +20,6 @@ Provisioning API
 REST::Google::Apps::Provisioning provides a Perl interface to Google's
 RESTful Apps API.
 
-This module is currently a work-in-progress.  Please e-mail with problems,
-bug fixes, comments and complaints.
-
 =head1 CONSTRUCTOR
 
 =head2 new ( DOMAIN, USERNAME, PASSWORD )
@@ -30,7 +27,7 @@ bug fixes, comments and complaints.
 Creates a new B<REST::Google::Apps::Provisioning> object.  A domain parameter
 is required.
 
-Supplying authentication information to the constructor is optional , but needs
+Supplying authentication information to the constructor is optional, but needs
 to happen either here or with a call to the B<authenticate> method.
 
 B<Example>
