@@ -743,11 +743,27 @@ sub getUserNicknames {
 
     my ( $ref, $nickname );
 
-    foreach ( keys %{$result->{'entry'}} ) {
-        $nickname = $1 if /^.*\/(.+)$/;
+    $nickname = $result->{'entry'}->{'apps:nickname'}->{'name'};
+
+    if ( $nickname ) {
         $ref->{$nickname} = {
-            %{$result->{'entry'}->{$_}->{'apps:login'}},
-            %{$result->{'entry'}->{$_}->{'apps:nickname'}}
+            %{$result->{'entry'}->{'apps:login'}},
+            %{$result->{'entry'}->{'apps:nickname'}}
+        };
+    }
+    else {
+        foreach ( keys %{$result->{'entry'}} ) {
+            if ( /^.*\/(.+)$/ ) {
+                $nickname = $1;
+            }
+            else { next; }
+
+            next if $ref->{$nickname};
+
+            $ref->{$nickname} = {
+                %{$result->{'entry'}->{$_}->{'apps:login'}},
+                %{$result->{'entry'}->{$_}->{'apps:nickname'}}
+            };
         }
     }
 
