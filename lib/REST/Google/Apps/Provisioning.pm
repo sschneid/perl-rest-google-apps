@@ -422,14 +422,25 @@ sub getAllGroups {
             }
         }
 
-        foreach my $e ( keys %{$result->{'entry'}} ) {
-            my $group = $result->{'entry'}->{$e}->{'apps:property'}->{'groupName'}->{'value'};
+        if ( $result->{'entry'}->{'apps:property'} ) {
+             my $group = $result->{'entry'}->{'apps:property'}->{'groupName'}->{'value'};
 
-            foreach ( keys %{$result->{'entry'}->{$e}->{'apps:property'}} ) {
-                $ref->{$group}->{$_} = $result->{'entry'}->{$e}->{'apps:property'}->{$_}->{'value'};
+            foreach ( keys %{$result->{'entry'}->{'apps:property'}} ) {
+                $ref->{$group}->{$_} = $result->{'entry'}->{'apps:property'}->{$_}->{'value'};
             }
 
-            $ref->{$group}->{'updated'} = $result->{'entry'}->{$e}->{'updated'};
+            $ref->{$group}->{'updated'} = $result->{'entry'}->{'updated'};
+        }
+        else {
+            foreach my $e ( keys %{$result->{'entry'}} ) {
+                my $group = $result->{'entry'}->{$e}->{'apps:property'}->{'groupName'}->{'value'};
+
+                foreach ( keys %{$result->{'entry'}->{$e}->{'apps:property'}} ) {
+                    $ref->{$group}->{$_} = $result->{'entry'}->{$e}->{'apps:property'}->{$_}->{'value'};
+                }
+
+                $ref->{$group}->{'updated'} = $result->{'entry'}->{$e}->{'updated'};
+            }
         }
     }
 
