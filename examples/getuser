@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+
+BEGIN { push @INC, '../lib'; }
+
+unless ( $ARGV[0] ) {
+    print "Usage: getuser <user>\n";
+    exit();
+}
+
+use YAML;
+my $config = YAML::LoadFile( 'config.yaml' );
+
+#--
+
+use REST::Google::Apps::Provisioning;
+
+my $google = REST::Google::Apps::Provisioning->new(
+    domain => $config->{'domain'}
+)
+|| die "Could not construct\n";
+
+$google->authenticate(
+    username => $config->{'username'},
+    password => $config->{'password'}
+)
+|| die "Could not authenticate\n";
+
+use Data::Dumper;
+print Dumper $google->getUser(
+    username => $ARGV[0]
+);
+

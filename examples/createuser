@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+
+BEGIN { push @INC, '../lib'; }
+
+unless ( $ARGV[0] ) {
+    print "Usage: createuser <user>\n";
+    exit();
+}
+
+use YAML;
+my $config = YAML::LoadFile( 'config.yaml' );
+
+#--
+
+use REST::Google::Apps::Provisioning;
+
+my $google = REST::Google::Apps::Provisioning->new(
+    domain => $config->{'domain'}
+)
+|| die "Could not construct\n";
+
+$google->authenticate(
+    username => $config->{'username'},
+    password => $config->{'password'}
+)
+|| die "Could not authenticate\n";
+
+use Data::Dumper;
+print Dumper $google->createUser(
+    username => $ARGV[0],
+    givenName => 'Test',
+    familyName => 'User',
+    password => '1dcec1df06aa98dac4497628d84916933e285267',
+    PasswordHashFunction => 'sha-1'
+);
+
