@@ -7,7 +7,7 @@ use XML::Simple;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.9-dev';
+our $VERSION = '1.1.10-dev';
 
 
 
