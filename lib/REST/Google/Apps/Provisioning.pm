@@ -459,6 +459,8 @@ sub addGroupMember {
         $arg->{$param} || croak( "Missing required '$param' argument" );
     }
 
+    $arg->{'member'} .= '@' . $self->{'domain'} unless ( $arg->{'member'} =~ /[@]/ );
+
     if ( $arg->{'owner'} && lc( $arg->{'owner'} ) eq 'true' ) {
         return $self->addGroupOwner(
             group => $arg->{'group'},
@@ -474,7 +476,7 @@ sub addGroupMember {
 
     $body .= qq(  <atom:category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/apps/2006#group" />\n);
     $body .= qq(  <apps:property name="groupId" value="$arg->{'group'}\@$self->{'domain'}" />\n);
-    $body .= qq(  <apps:property name="memberId" value="$arg->{'member'}\@$self->{'domain'}" />\n);
+    $body .= qq(  <apps:property name="memberId" value="$arg->{'member'}" />\n);
 
     $body .= $self->_xmlpost();
 
@@ -498,6 +500,8 @@ sub deleteGroupMember {
     foreach my $param ( qw/ group member / ) {
         $arg->{$param} || croak( "Missing required '$param' argument" );
     }
+
+    $arg->{'member'} .= '@' . $self->{'domain'} unless ( $arg->{'member'} =~ /[@]/ );
 
     my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'}/$arg->{'group'}/member/$arg->{'member'});
 
