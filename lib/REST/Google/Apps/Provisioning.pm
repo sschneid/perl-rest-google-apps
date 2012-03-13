@@ -537,7 +537,7 @@ sub getGroupMembers {
 
         if ( $result->{'entry'}->{'apps:property'} ) {
             my $member = $result->{'entry'}->{'apps:property'}->{'memberId'}->{'value'};
-            $member =~ s/^(.*)\@.*$/$1/g;
+            $member =~ s/^(.*)\@\Q$self->{'domain'}\E$/$1/g;
 
             foreach ( keys %{$result->{'entry'}->{'apps:property'}} ) {
                 $ref->{$member}->{$_} = $result->{'entry'}->{'apps:property'}->{$_}->{'value'};
