@@ -289,6 +289,10 @@ sub updateUser {
         }
     }
 
+    if ( $arg->{'changepasswordatnextlogin'} ) {
+        $body .= qq(  <apps:login userName="$arg->{'username'}" changePasswordAtNextLogin="$arg->{'changepasswordatnextlogin'}" />\n);
+    }
+
     if ( $arg->{'suspended'} ) {
         $body .= qq(  <apps:login userName="$arg->{'username'}" suspended="$arg->{'suspended'}" />\n);
     }
