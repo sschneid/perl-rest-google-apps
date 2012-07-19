@@ -198,8 +198,6 @@ sub getAllUsers {
         }
 
         foreach ( keys %{$result->{'entry'}} ) {
-            print "[$1]\n";
-
             if ( /^.*\/(.+)$/ ) {
                 $ref->{$1} = {
                     %{$result->{'entry'}->{$_}->{'apps:name'}},
