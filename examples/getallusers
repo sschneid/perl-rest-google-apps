@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-BEGIN { push @INC, '../lib'; }
+BEGIN { unshift @INC, '../lib'; }
 
 use YAML;
 my $config = YAML::LoadFile( 'config.yaml' );

@@ -198,12 +198,15 @@ sub getAllUsers {
         }
 
         foreach ( keys %{$result->{'entry'}} ) {
-            my $username = $1 if /^.*\/(.+)$/;
-            $ref->{$username} = {
-                %{$result->{'entry'}->{$_}->{'apps:name'}},
-                %{$result->{'entry'}->{$_}->{'apps:login'}},
-                %{$result->{'entry'}->{$_}->{'apps:quota'}}
-            };
+            print "[$1]\n";
+
+            if ( /^.*\/(.+)$/ ) {
+                $ref->{$1} = {
+                    %{$result->{'entry'}->{$_}->{'apps:name'}},
+                    %{$result->{'entry'}->{$_}->{'apps:login'}},
+                    %{$result->{'entry'}->{$_}->{'apps:quota'}}
+                };
+            }
         }
     }
 
