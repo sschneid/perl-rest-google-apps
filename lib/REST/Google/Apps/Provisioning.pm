@@ -181,6 +181,34 @@ sub getUser {
     return( $ref );
 }
 
+sub getGroupsForUser {
+    my $self = shift;
+
+    my ( $arg );
+    %{$arg} = @_;
+
+    map { $arg->{lc($_)} = $arg->{$_} } keys %{$arg};
+
+    foreach my $param ( qw/ username / ) {
+        $arg->{$param} || croak( "Missing required '$param' argument" );
+    }
+
+    my $url = qq(https://apps-apis.google.com/a/feeds/group/2.0/$self->{'domain'}/?member=$arg->{'username'});
+
+    my $result = $self->_request( 'method' => 'GET', 'url' => $url ) || return( 0 );
+
+    my ( $ref );
+    foreach my $entry (keys(%{$result->{'entry'}})) {
+        my $props = $result->{'entry'}->{$entry}->{'apps:property'};
+        my $group = $props->{'groupId'}->{'value'};
+        foreach my $prop (keys(%{$props})) {
+            $ref->{$arg->{'username'}}->{$group}->{$prop} = $props->{$prop}->{'value'};
+        }
+    }
+
+    return( $ref );
+}
+
 sub getAllUsers {
     my $self = shift;
 
