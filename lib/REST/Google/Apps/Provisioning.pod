@@ -161,6 +161,37 @@ Using the above example, the returned hash is:
       'agreedToTerms' => 'false'
   }
 
+=head2 getGroupsForUser ( USER )
+
+Retrieve a hash containing a user's group memberships.
+
+B<Example>
+
+  $user->{'jsmith'} = $google->getGroupsForUser( username => 'jsmith' );
+
+B<Hash>
+
+Using the above example, the returned hash might look like:
+
+  'jsmith' => {
+    'finance@company.com' => {
+      'permissionPreset' => 'Restricted',
+      'directMember' => 'true',
+      'emailPermission' => 'Member',
+      'groupId' => 'finance@company.com',
+      'groupName' => 'Finance',
+      'description' => 'Finance Department'
+    },
+    'members@company.com' => {
+      'permissionPreset' => 'Restricted',
+      'directMember' => 'true',
+      'emailPermission' => 'Member',
+      'groupId' => 'members@company.com',
+      'groupName' => 'Employees',
+      'description' => ''
+    },
+  }
+
 =head2 getAllUsers
 
 Retrieve a list of all users.
