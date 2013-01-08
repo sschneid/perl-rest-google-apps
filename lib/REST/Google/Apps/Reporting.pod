@@ -1,0 +1,58 @@
+=head1 NAME
+
+REST::Google::Apps::Reporting - A Perl library to Google's RESTful Apps
+Reporting API
+
+=head1 SYNOPSIS
+
+  use REST::Google::Apps::Reporting
+
+  $google = REST::Google::Apps::Reporting->new(
+      domain   => 'company.com',
+      username => 'admin',
+      password => 'g00gl34pp5!'
+  );
+
+=head1 DESCRIPTION
+
+REST::Google::Apps::Reporting provides a Perl interface to Google's
+RESTful Apps API.
+
+=head1 CONSTRUCTOR
+
+=head2 new ( DOMAIN, USERNAME, PASSWORD )
+
+Creates a new B<REST::Google::Apps::Reporting> object.  A domain parameter
+is required.
+
+Supplying authentication information to the constructor is optional, but needs
+to happen either here or with a call to the B<authenticate> method.
+
+B<Example>
+
+  $google = REST::Google::Apps::Reporting->new(
+      domain   => 'company.com',
+      username => 'admin',
+      password => 'g00gl34pp5!'
+  );
+
+=head1 METHODS
+
+=head2 authenticate ( USERNAME, PASSWORD )
+
+Authenticate a session.
+
+B<Example>
+
+  $google->authenticate(
+      username => 'admin',
+      password => 'g00gl34pp5!'
+  )
+  || die "Could not authenticate";
+
+=head1 AUTHOR
+
+Scott Schneider <sschneid@gmail.com>
+
+=cut
+
