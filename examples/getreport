@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+
+BEGIN { push @INC, '../lib'; }
+
+use YAML;
+my $config = YAML::LoadFile( 'config.yaml' );
+
+#--
+
+use REST::Google::Apps::Reporting;
+
+my $google = REST::Google::Apps::Reporting->new(
+    domain => $config->{'domain'}
+)
+|| die "Could not construct\n";
+
+$google->authenticate(
+    username => $config->{'username'},
+    password => $config->{'password'}
+)
+|| die "Could not authenticate\n";
+
+use Data::Dumper;
+if ( $ARGV[0] ) {
+    print Dumper $google->getReport( username => $ARGV[0] );
+}
+else {
+    print Dumper $google->getReport();
+}
+
